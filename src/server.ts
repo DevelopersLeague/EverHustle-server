@@ -6,8 +6,8 @@ import { logger } from './common';
 import { env } from './config/env.config';
 
 const myApp = new App([]);
-myApp.expressApp.listen(3000, () => {
-  logger.info('server started at port 3000');
+myApp.expressApp.listen(env.PORT, () => {
+  logger.info(`server started at port ${env.PORT}`);
 });
 
 // mongoose
