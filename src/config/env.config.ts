@@ -2,10 +2,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 if (!process.env.MONGO_USER) {
-  throw new Error('provide a mongodb username in .env file');
+  throw new Error(
+    'provide a mongodb username in .env file or environment variable'
+  );
 }
 if (!process.env.MONGO_PASSWORD) {
-  throw new Error('provide a mongodb password in .env file');
+  throw new Error(
+    'provide a mongodb password in .env file or environment variable'
+  );
 }
 
 export const env = {
