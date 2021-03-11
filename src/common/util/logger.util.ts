@@ -1,6 +1,7 @@
 import { Format } from 'logform';
 import { createLogger, transports, format } from 'winston';
-import { env } from '../../config/env.config';
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // logfile format
 const logFileFormat: Format = format.combine(
@@ -11,7 +12,7 @@ const logFileFormat: Format = format.combine(
 
 export const logger = createLogger({
   // when not in production log debug and up
-  level: env.NODE_ENV === 'production' ? 'info' : 'debug',
+  level: NODE_ENV === 'production' ? 'info' : 'debug',
   // add default transports ie console
   transports: [
     new transports.Console({
@@ -27,7 +28,7 @@ export const logger = createLogger({
 });
 
 // silent in testing
-if (env.NODE_ENV == 'test' || env.NODE_ENV == 'testing') {
+if (NODE_ENV == 'test' || NODE_ENV == 'testing') {
   logger.transports.forEach((transport) => {
     transport.silent = true;
   });

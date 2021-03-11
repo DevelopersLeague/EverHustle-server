@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import { LogEntry } from 'winston';
 import { createLogger, transports, format, Logger } from 'winston';
 import { Format } from 'logform';
-import { env } from '../../config/env.config';
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // error logger
 export const errorLogger: Logger = createLogger({
@@ -15,7 +16,7 @@ export const errorLogger: Logger = createLogger({
   ],
 });
 // silent in testing
-if (env.NODE_ENV === 'test' || env.NODE_ENV === 'testing') {
+if (NODE_ENV === 'test' || NODE_ENV === 'testing') {
   errorLogger.transports.forEach((t) => {
     t.silent = true;
   });

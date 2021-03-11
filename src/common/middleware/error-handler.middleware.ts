@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { env } from '../../config/env.config';
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
 
 /**
  * @description
@@ -35,7 +36,7 @@ export function handleError(opts?: { stack: boolean }) {
     // if stack is true then add stack to the log
 
     if (opts && opts.stack === true) {
-      if (env.NODE_ENV === 'development') {
+      if (NODE_ENV === 'development') {
         jsonResponse.stack = err.stack;
       }
     }
