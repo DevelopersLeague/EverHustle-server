@@ -68,7 +68,7 @@ code: 500
 code: 404
     message: user not found 
 code: 401
-    message: email is unauthenticated
+    message: email is not confirmed
     message: wrong password
 
 --------------------------------------------------------------------------------
