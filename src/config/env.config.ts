@@ -14,6 +14,7 @@ if (!process.env.MONGO_PASSWORD) {
 
 export const env = {
   NODE_ENV: process.env.NODE_ENV || 'development',
+  PORT: Number(process.env.NODE_ENV) || 8000,
 
   MONGO_USER: process.env.MONGO_USER,
   MONGO_PASSWORD: process.env.MONGO_PASSWORD,
