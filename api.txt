@@ -1,0 +1,257 @@
+################################################################################
+################################################################################
+#
+# productivity app
+#
+################################################################################
+################################################################################
+
+################################################################################
+
+Auth
+
+################################################################################
+
+--------------------------------------------------------------------------------
+@route
+POST /api/v1/auth/signup
+
+@description
+creates a new user and send an email for verification
+
+@req-body
+{
+    "firstName":"john",
+    "lastName":"dove",
+    "email":"john.dove@gmail.com",
+    "password":"password123",
+}
+
+@resp-body
+{
+    "message":"signup successful confirm email to continue"
+}
+
+@errors
+code: 400
+    message: email already taken
+code: 500
+    message: something went wrong
+
+@error-body
+{
+    "status": <http status code>
+    "message":"<an appropriate error message>"
+}
+
+--------------------------------------------------------------------------------
+@route
+POST /api/v1/auth/login
+
+@description
+logs in the user
+
+@req-body
+{
+    "email":"testUser",
+    "password":"testPassword"
+}
+
+@resp-body
+{
+    "token":"Bearer ksgkjgklfjgjdfojgdjfsd13i283u4rwefk"
+}
+
+@errors
+code: 500
+    message: something went wrong
+code: 404
+    message: user not found 
+code: 401
+    message: email is unauthenticated
+    message: wrong password
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/auth/confirmemail/{JWT}
+
+@description
+confirm user email
+
+@resp-description
+redirect to client login page
+
+--------------------------------------------------------------------------------
+
+################################################################################
+
+Notes
+
+#################################################################################
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/notes
+
+@query
+category:
+    description: get notes of requested category
+    url: /api/v1/notes/?category=productivity
+
+@description
+get a list of all the notes by the current user
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "notes":[
+        {
+            "id":"<id of the note>"
+            "title":"<title of the note>"
+            "content":"<contents of the note>"
+            "category":"<category of the note>"
+        },
+        {
+            "id":"<id of the note>"
+            "title":"<title of the note>"
+            "content":"<contents of the note>"
+            "category":"<category of the note>"
+        },
+    ],
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/notes/{id}
+
+@description
+get one note by id
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 400
+    message: invalid id
+code: 401
+    message: unauthenticated user
+
+--------------------------------------------------------------------------------
+@route
+POST /api/v1/notes
+
+@description
+create a new note
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "note":{
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+PUT /api/v1/notes/{id}
+
+@description
+update a note
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "note":{
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+code: 400
+    message: invalid id
+
+--------------------------------------------------------------------------------
+@route
+DELETE /api/v1/notes/{id}
+
+@description
+delete a note
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+code: 400
+    message: invalid id
+
+--------------------------------------------------------------------------------
+
+################################################################################
+
+Timer
+
+#################################################################################
+
+--------------------------------------------------------------------------------
