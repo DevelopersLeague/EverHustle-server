@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import './config/env.config';
 import { App } from './app';
 import mongoose from 'mongoose';
 import { logger } from './common';
