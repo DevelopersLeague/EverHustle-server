@@ -250,8 +250,50 @@ code: 400
 
 ################################################################################
 
-Timer
+focustime
 
 #################################################################################
 
 --------------------------------------------------------------------------------
+@route
+POST /api/v1/focustime
+
+@description
+records one focus time session
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "id":"<id of the focustime session>"
+    "date":"<today's date in YYYY-MM-DD format>"
+    "time":"<total time focused in HH:MM:SS format>"
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/focustime/{date}
+
+@description
+returns total focus time for a date (date expected in YYYY-MM-DD format)
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "date":"<requested date in YYYY-MM-DD format>",
+    "time":"<total time for the date in HH:MM:SS format>"
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+
