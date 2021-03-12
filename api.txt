@@ -74,6 +74,9 @@ code: 401
 @route
 GET /api/v1/auth/confirmemail/{JWT}
 
+@note
+this route has nothing to do with front end will be used only by the backend
+
 @description
 confirm user email
 
