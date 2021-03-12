@@ -26,11 +26,11 @@ export function handleError(opts?: { stack: boolean }) {
       err.message = 'something went wrong';
     }
     const jsonResponse: {
-      statusCode: number;
+      code: number;
       message: string;
       stack?: string;
     } = {
-      statusCode: err.statusCode,
+      code: err.statusCode,
       message: err.message,
     };
     // if stack is true then add stack to the log

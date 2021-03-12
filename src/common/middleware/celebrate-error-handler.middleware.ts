@@ -22,7 +22,7 @@ export function handleCelebrateError(): ErrorRequestHandler {
       });
     });
     const jsonResponse: any = {
-      statusCode: 400,
+      code: 400,
       errors: errors,
     };
     res.status(400).json(jsonResponse);
