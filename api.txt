@@ -93,14 +93,14 @@ Notes
 @route
 GET /api/v1/notes
 
+@description
+get a list of all the notes by the current user
+get list of notes by current user of specific category
+
 @query
 category:
     description: get notes of requested category
     url: /api/v1/notes/?category=productivity
-
-@description
-get a list of all the notes by the current user
-get list of notes by current user of specific category
 
 @req-header
 Authorization: <token>
@@ -302,7 +302,168 @@ code: 401
 --------------------------------------------------------------------------------
 ################################################################################
 
-Reminders
+Goals
 
 #################################################################################
+////
+//// notes api copied here
+////
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/notes
+
+@description
+get a list of all the notes by the current user
+get list of notes by current user of specific category
+
+@query
+category:
+    description: get notes of requested category
+    url: /api/v1/notes/?category=productivity
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "notes":[
+        {
+            "id":"<id of the note>"
+            "title":"<title of the note>"
+            "content":"<contents of the note>"
+            "category":"<category of the note>"
+        },
+        {
+            "id":"<id of the note>"
+            "title":"<title of the note>"
+            "content":"<contents of the note>"
+            "category":"<category of the note>"
+        },
+    ],
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/notes/{id}
+
+@description
+get one note by id
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 400
+    message: invalid id
+code: 401
+    message: unauthenticated user
+
+--------------------------------------------------------------------------------
+@route
+POST /api/v1/notes
+
+@description
+create a new note
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "note":{
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+PUT /api/v1/notes/{id}
+
+@description
+update a note
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "note":{
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+code: 400
+    message: invalid id
+
+--------------------------------------------------------------------------------
+@route
+DELETE /api/v1/notes/{id}
+
+@description
+delete a note
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "note":{
+        "id":"<id of the note>"
+        "title":"<title of the note>"
+        "content":"<contents of the note>"
+        "category":"<category of the note>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+code: 400
+    message: invalid id
+
 --------------------------------------------------------------------------------
