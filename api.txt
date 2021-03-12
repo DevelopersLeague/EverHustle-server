@@ -265,7 +265,12 @@ Authorization: <token>
 
 @req-body
 {
-    "id":"<id of the focustime session>"
+    "date":"<today's date in YYYY-MM-DD format>"
+    "time":"<total time focused in HH:MM:SS format>"
+}
+
+@resp-body
+{
     "date":"<today's date in YYYY-MM-DD format>"
     "time":"<total time focused in HH:MM:SS format>"
 }
