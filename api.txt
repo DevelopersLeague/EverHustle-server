@@ -39,7 +39,7 @@ code: 500
 
 @error-body
 {
-    "status": <http status code>
+    "code": <http status code>
     "message":"<an appropriate error message>"
 }
 
