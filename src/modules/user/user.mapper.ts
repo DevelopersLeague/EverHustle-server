@@ -1,14 +1,14 @@
 import { CreateUserDto, UserResponseDto } from './dto';
 import { IUser } from './user.model';
 export class UserMapper {
-  public static anyToCreateDto(body: any): CreateUserDto {
-    const dto = new CreateUserDto(
+  public anyToCreateDto(body: any): CreateUserDto {
+    const createUserdto = new CreateUserDto(
       body.firstName,
       body.lastName,
       body.email,
       body.password
     );
-    return dto;
+    return createUserdto;
   }
 
   public modelToRespDto(user: IUser): UserResponseDto {
