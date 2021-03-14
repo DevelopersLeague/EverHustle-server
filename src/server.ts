@@ -4,6 +4,7 @@ import { App } from './app';
 import mongoose from 'mongoose';
 import { logger } from './common';
 import { env } from './config/env.config';
+import { AuthController } from './modules/auth';
 
 mongoose
   .connect(env.MONGO_URI, {
@@ -13,7 +14,7 @@ mongoose
   })
   .then(() => {
     logger.info('database connection successful');
-    const myApp = new App([]);
+    const myApp = new App([AuthController]);
     myApp.expressApp.listen(env.PORT, () => {
       logger.info(`server started at port ${env.PORT}`);
     });

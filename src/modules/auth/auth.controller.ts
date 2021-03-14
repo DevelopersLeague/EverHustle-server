@@ -16,7 +16,7 @@ export class AuthController implements IBaseController {
   ) {
     this.initRoutes();
   }
-  public initRoutes() {
+  public initRoutes(): void {
     this.router.post('/signup', catchAsync(this.signup.bind(this)));
   }
 
@@ -29,7 +29,7 @@ export class AuthController implements IBaseController {
     );
     res.status(201).json({
       user: this.userMapper.modelToRespDto(user),
-      message: 'signup successful confirm email to continue',
+      message: 'signup successful confirm email and login to continue',
     });
   }
 }
