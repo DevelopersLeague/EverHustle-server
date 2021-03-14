@@ -28,7 +28,12 @@ creates a new user and send an email for verification
 
 @resp-body
 {
-    "message":"signup successful confirm email to continue"
+    "message":"signup successful confirm email to continue",
+    "user":{
+        "firstName":"john",
+        "lastName":"dove",
+        "email":"john.dove@gmail.com",
+    }
 }
 
 @errors
@@ -59,6 +64,11 @@ logs in the user
 @resp-body
 {
     "token":"Bearer ksgkjgklfjgjdfojgdjfsd13i283u4rwefk"
+    "user":{
+        "firstName":"john",
+        "lastName":"dove",
+        "email":"john.dove@gmail.com",
+    }
 }
 
 @errors
