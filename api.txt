@@ -28,7 +28,7 @@ creates a new user and send an email for verification
 
 @resp-body
 {
-    "message":"signup successful confirm email to continue",
+    "message":"signup successful confirm email and login",
     "user":{
         "firstName":"john",
         "lastName":"dove",
