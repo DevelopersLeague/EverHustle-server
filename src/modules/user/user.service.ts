@@ -7,8 +7,9 @@ import { env } from '../../config/env.config';
 @injectable()
 @singleton()
 export class UserService {
+  public models = { User: User };
   public async createUser(dto: CreateUserDto): Promise<IUser> {
-    const user = new User();
+    const user = new this.models.User();
     user.firstName = dto.firstName;
     user.lastName = dto.lastName;
     user.email = dto.email;
