@@ -315,39 +315,37 @@ code: 401
 Goals
 
 #################################################################################
-////
-//// notes api copied here
-////
 --------------------------------------------------------------------------------
 @route
 GET /api/v1/goals
 
 @description
-get a list of all the notes by the current user
-get list of notes by current user of specific category
+get a list of all the goals by the current user
+get list of goals by current user of specific category
 
 @query
 category:
-    description: get notes of requested category
-    url: /api/v1/notes/?category=productivity
+    description: get goals of requested category
+    url: /api/v1/goals/?category=shortterm
+    opttions: shortterm, longterm, daily etc
 
 @req-header
 Authorization: <token>
 
 @resp-body
 {
-    "notes":[
+    "goals":[
         {
-            "id":"<id of the note>"
-            "title":"<title of the note>"
-            "content":"<contents of the note>"
-            "category":"<category of the note>"
+            "id":"<id of the goal>"
+            "title":"<title of the goal>"
+            "content":"<contents of the goal>"
+            "category":"<category of the goal>"
         },
         {
-            "id":"<id of the note>"
-            "title":"<title of the note>"
-            "content":"<contents of the note>"
-            "category":"<category of the note>"
+            "id":"<id of the goal>"
+            "title":"<title of the goal>"
+            "content":"<contents of the goal>"
+            "category":"<category of the goal>"
         },
     ],
 }
@@ -361,18 +359,18 @@ code: 401
 GET /api/v1/goals/{id}
 
 @description
-get one note by id
+get one goal by id
 
 @req-header
 Authorization: <token>
 
 @resp-body
 {
-    "note":{
-        "id":"<id of the note>"
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "id":"<id of the goal>"
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
@@ -387,27 +385,27 @@ code: 401
 POST /api/v1/goals
 
 @description
-create a new note
+create a new goal
 
 @req-header
 Authorization: <token>
 
 @req-body
 {
-    "note":{
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
 @resp-body
 {
-    "note":{
-        "id":"<id of the note>"
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "id":"<id of the goal>"
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
@@ -420,27 +418,27 @@ code: 401
 PUT /api/v1/goals/{id}
 
 @description
-update a note
+update a goal
 
 @req-header
 Authorization: <token>
 
-@req-body
+@req-body (include only the fields to be updates)
 {
-    "note":{
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
 @resp-body
 {
-    "note":{
-        "id":"<id of the note>"
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "id":"<id of the goal>"
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
@@ -455,18 +453,18 @@ code: 400
 DELETE /api/v1/goals/{id}
 
 @description
-delete a note
+delete a goal
 
 @req-header
 Authorization: <token>
 
 @resp-body
 {
-    "note":{
-        "id":"<id of the note>"
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
+    "goal":{
+        "id":"<id of the goal>"
+        "title":"<title of the goal>"
+        "content":"<contents of the goal>"
+        "category":"<category of the goal>"
     }
 }
 
@@ -476,4 +474,10 @@ code: 401
 code: 400
     message: invalid id
 
+--------------------------------------------------------------------------------
+################################################################################
+
+Reminders
+
+#################################################################################
 --------------------------------------------------------------------------------
