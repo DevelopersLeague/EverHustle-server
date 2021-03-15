@@ -41,7 +41,7 @@ export class AuthController implements IBaseController {
   }
 
   /**
-   * GET /api/v1/auth/confirmemail
+   * GET /api/v1/auth/confirmemail/:token
    */
   public async confirmEmail(req: Request, res: Response): Promise<void> {
     const token = req.params['token'];

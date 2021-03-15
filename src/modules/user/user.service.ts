@@ -11,6 +11,10 @@ import { EmailService } from '../email';
 export class UserService {
   public models = { User: User };
   constructor(public emailService: EmailService) {}
+  /**
+   * @description
+   * creates a new user
+   */
   public async createUser(dto: CreateUserDto): Promise<IUser> {
     const existingUser = await this.models.User.findOne({ email: dto.email });
     if (existingUser) {
