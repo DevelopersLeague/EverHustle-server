@@ -10,6 +10,7 @@ export function handleCelebrateError(): ErrorRequestHandler {
   ) {
     if (!isCelebrateError(err)) {
       next(err);
+      return;
     }
     const errors: any[] = [];
     err.details.forEach((mapEntry, key) => {

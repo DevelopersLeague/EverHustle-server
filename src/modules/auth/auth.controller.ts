@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { injectable, singleton } from 'tsyringe';
-import { catchAsync, IBaseController } from '../../common';
+import { catchAsync, IBaseController, logger } from '../../common';
 import { UserMapper, UserService } from '../user';
 
 @injectable()
@@ -18,6 +18,10 @@ export class AuthController implements IBaseController {
   }
   public initRoutes(): void {
     this.router.post('/signup', catchAsync(this.signup.bind(this)));
+    this.router.get(
+      '/confirmemail/:token',
+      catchAsync(this.confirmEmail.bind(this))
+    );
   }
 
   /**
@@ -31,5 +35,13 @@ export class AuthController implements IBaseController {
       user: this.userMapper.modelToRespDto(user),
       message: 'signup successful confirm email and login to continue',
     });
+  }
+
+  /**
+   * GET /api/v1/auth/confirmemail
+   */
+  public async confirmEmail(req: Request, res: Response): Promise<void> {
+    const token = req.params['token'];
+    logger.debug(`token: ${token}`);
   }
 }
