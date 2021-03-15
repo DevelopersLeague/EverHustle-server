@@ -3,14 +3,20 @@ import { CreateUserDto } from './dto';
 import bcrypt from 'bcrypt';
 import { IUser, User } from './user.model';
 import { env } from '../../config/env.config';
-import createHttpError from 'http-errors';
+import createHttpError, { HttpError } from 'http-errors';
 import { EmailService } from '../email';
+import { UserLoginDto } from './dto/user-login.dto';
+import jwt from 'jsonwebtoken';
+import { UserMapper } from './user.mapper';
 
 @injectable()
 @singleton()
 export class UserService {
   public models = { User: User };
-  constructor(public emailService: EmailService) {}
+  constructor(
+    public emailService: EmailService,
+    public userMapper: UserMapper
+  ) {}
   /**
    * @description
    * creates a new user
@@ -18,7 +24,9 @@ export class UserService {
   public async createUser(dto: CreateUserDto): Promise<IUser> {
     const existingUser = await this.models.User.findOne({ email: dto.email });
     if (existingUser) {
-      throw new createHttpError.BadRequest('email already taken');
+      return Promise.reject(
+        new createHttpError.BadRequest('email already taken')
+      );
     }
     const user = new this.models.User();
     user.firstName = dto.firstName;
@@ -39,6 +47,46 @@ export class UserService {
     if (user) {
       user.isEmailVerified = true;
       await user.save();
+    }
+  }
+
+  /**
+   * @description
+   * returns signed jwt containing user data
+   */
+  public async login(dto: UserLoginDto): Promise<string> {
+    const user = await this.models.User.findOne({ email: dto.email });
+    if (!user) {
+      return Promise.reject(new createHttpError.Unauthorized('invalid email'));
+    } else {
+      // if user is found
+      // email not verified
+      if (!user.isEmailVerified) {
+        return Promise.reject(
+          new createHttpError.Unauthorized('email not verified')
+        );
+      }
+      // if passwords match
+      if (bcrypt.compare(dto.password, user.password)) {
+        const token = jwt.sign(
+          {
+            id: user.id,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          },
+          env.JWT_SECRET_KEY,
+          {
+            expiresIn: '1d',
+          }
+        );
+        return Promise.resolve(token);
+      } else {
+        // if passwords do not match
+        return Promise.reject(
+          new createHttpError.Unauthorized('invalid password')
+        );
+      }
     }
   }
 }

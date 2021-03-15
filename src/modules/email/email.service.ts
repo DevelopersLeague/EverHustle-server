@@ -30,7 +30,9 @@ export class EmailService {
     userEmail: string
   ): Promise<void> {
     // sending the email
-    const token = jwt.sign({ id: userId }, env.JWT_SECRET_KEY);
+    const token = jwt.sign({ id: userId }, env.JWT_SECRET_KEY, {
+      expiresIn: '1d',
+    });
     const verficationLink = `${env.SERVER_URL}/api/v1/auth/confirmemail/${token}`;
     await this.sendMail(
       new CreateEmailDto(
