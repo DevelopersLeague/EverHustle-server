@@ -7,7 +7,7 @@
     "start": "node dist/server.js",
     "prestart": "npm run build",
     "build": "tsc",
-    "start:dev": "nodemon src/server.ts",
+    "start:dev": "nodemon --files src/server.ts",
     "start:prod": "npm start",
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",

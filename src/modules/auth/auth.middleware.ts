@@ -25,7 +25,6 @@ export class AuthMiddleware {
           .findUserByid(payload.id)
           .then((user) => {
             req.user = user;
-            logger.debug('user: %o', user);
             next();
           })
           .catch(next);
