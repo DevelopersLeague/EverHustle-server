@@ -331,16 +331,18 @@ Authorization: <token>
 {
     "goals":[
         {
-            "id":"<id of the goal>"
-            "title":"<title of the goal>"
-            "content":"<contents of the goal>"
-            "category":"<category of the goal>"
+            "id":"<id of the goal>",
+            "title":"<title of the goal>",
+            "content":"<contents of the goal>",
+            "category":"<category of the goal>",
+            "isCompleted": <true/false>
         },
         {
             "id":"<id of the goal>"
             "title":"<title of the goal>"
             "content":"<contents of the goal>"
             "category":"<category of the goal>"
+            "isCompleted": <true/false>
         },
     ],
 }
@@ -366,6 +368,7 @@ Authorization: <token>
         "title":"<title of the goal>"
         "content":"<contents of the goal>"
         "category":"<category of the goal>"
+        "isCompleted": <true/false>
     }
 }
 
@@ -401,6 +404,7 @@ Authorization: <token>
         "title":"<title of the goal>"
         "content":"<contents of the goal>"
         "category":"<category of the goal>"
+        "isCompleted": <false>
     }
 }
 
@@ -424,6 +428,7 @@ Authorization: <token>
         "title":"<title of the goal>"
         "content":"<contents of the goal>"
         "category":"<category of the goal>"
+        "isCompleted": <true/false>
     }
 }
 
@@ -434,6 +439,7 @@ Authorization: <token>
         "title":"<title of the goal>"
         "content":"<contents of the goal>"
         "category":"<category of the goal>"
+        "isCompleted": <true/false>
     }
 }
 
