@@ -30,6 +30,7 @@ creates a new user and send an email for verification
 {
     "message":"signup successful confirm email and login",
     "user":{
+        "id":"<user id>",
         "firstName":"john",
         "lastName":"dove",
         "email":"john.dove@gmail.com",
@@ -64,19 +65,13 @@ logs in the user
 @resp-body
 {
     "token":"Bearer ksgkjgklfjgjdfojgdjfsd13i283u4rwefk"
-    "user":{
-        "firstName":"john",
-        "lastName":"dove",
-        "email":"john.dove@gmail.com",
-    }
 }
 
 @errors
 code: 500
     message: something went wrong
-code: 404
-    message: user not found 
 code: 401
+    message: invaild email
     message: email is not confirmed
     message: wrong password
 
