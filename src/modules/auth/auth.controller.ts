@@ -1,7 +1,10 @@
 import { Router, Request, Response } from 'express';
 import { injectable, singleton } from 'tsyringe';
 import { catchAsync, IBaseController, logger } from '../../common';
+import { EmailService } from '../email';
 import { UserMapper, UserService } from '../user';
+import jwt from 'jsonwebtoken';
+import { env } from '../../config/env.config';
 
 @injectable()
 @singleton()
@@ -42,6 +45,8 @@ export class AuthController implements IBaseController {
    */
   public async confirmEmail(req: Request, res: Response): Promise<void> {
     const token = req.params['token'];
-    logger.debug(`token: ${token}`);
+    const payload: any = jwt.verify(token, env.JWT_SECRET_KEY);
+    await this.userService.markEmailConfirmed(payload.id);
+    res.redirect('https://www.google.com/');
   }
 }

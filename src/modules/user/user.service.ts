@@ -4,13 +4,13 @@ import bcrypt from 'bcrypt';
 import { IUser, User } from './user.model';
 import { env } from '../../config/env.config';
 import createHttpError from 'http-errors';
-import { AuthService } from '../auth';
+import { EmailService } from '../email';
 
 @injectable()
 @singleton()
 export class UserService {
   public models = { User: User };
-  constructor(public authService: AuthService) {}
+  constructor(public emailService: EmailService) {}
   public async createUser(dto: CreateUserDto): Promise<IUser> {
     const existingUser = await this.models.User.findOne({ email: dto.email });
     if (existingUser) {
@@ -22,8 +22,19 @@ export class UserService {
     user.email = dto.email;
     user.password = await bcrypt.hash(dto.password, env.SALT_ROUNDS);
     await user.save();
-    await this.authService.sendVerificationEmail(user.id, user.email);
+    await this.emailService.sendVerificationEmail(user.id, user.email);
     return Promise.resolve(user);
   }
 
+  /**
+   * @description
+   * marks the email as confirmed
+   */
+  public async markEmailConfirmed(id: string): Promise<void> {
+    const user = await this.models.User.findById(id);
+    if (user) {
+      user.isEmailVerified = true;
+      await user.save();
+    }
+  }
 }
