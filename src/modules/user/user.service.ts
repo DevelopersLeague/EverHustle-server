@@ -13,10 +13,12 @@ import { UserMapper } from './user.mapper';
 @singleton()
 export class UserService {
   public models = { User: User };
+
   constructor(
     public emailService: EmailService,
     public userMapper: UserMapper
   ) {}
+
   /**
    * @description
    * creates a new user
@@ -52,6 +54,20 @@ export class UserService {
 
   /**
    * @description
+   * finds and returns the user with given id
+   */
+  public async findUserByid(id: string): Promise<IUser> {
+    const user = await this.models.User.findById(id);
+    if (user) {
+      return Promise.resolve(user);
+    } else {
+      return Promise.reject(new Error('invalid user id'));
+    }
+  }
+
+  /**
+   * @description
+   * logs in the user\
    * returns signed jwt containing user data
    */
   public async login(dto: UserLoginDto): Promise<string> {

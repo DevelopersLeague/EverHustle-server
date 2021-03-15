@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import { IUser } from './modules/user';
 import './config/env.config';
 import { App } from './app';
 import mongoose from 'mongoose';
