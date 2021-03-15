@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { injectable, singleton } from 'tsyringe';
-import { logger } from '../../common';
 import { UserService } from '../user';
 import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';

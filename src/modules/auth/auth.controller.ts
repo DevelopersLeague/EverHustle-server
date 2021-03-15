@@ -13,6 +13,7 @@ export class AuthController implements IBaseController {
   public router = Router();
   public middlewareBefore: Handler[] = [];
   public middlewareAfter: Handler[] = [];
+
   constructor(
     private readonly userService: UserService,
     private readonly userMapper: UserMapper,
@@ -20,6 +21,7 @@ export class AuthController implements IBaseController {
   ) {
     this.initRoutes();
   }
+
   public initRoutes(): void {
     this.router.post('/signup', catchAsync(this.signup.bind(this)));
     this.router.post('/login', catchAsync(this.login.bind(this)));
