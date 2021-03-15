@@ -38,7 +38,7 @@ export class EmailService {
       new CreateEmailDto(
         userEmail,
         'everhustleapp@gmail.com',
-        'test subject',
+        'confirm email',
         `<a href="${verficationLink}">verify email</a>`
       )
     );
