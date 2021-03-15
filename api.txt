@@ -12,7 +12,7 @@ Auth
 
 ################################################################################
 --------------------------------------------------------------------------------
-@route
+@route - implemented
 POST /api/v1/auth/signup
 
 @description
@@ -50,7 +50,7 @@ code: 500
 }
 
 --------------------------------------------------------------------------------
-@route
+@route - implemented
 POST /api/v1/auth/login
 
 @description
@@ -76,7 +76,7 @@ code: 401
     message: wrong password
 
 --------------------------------------------------------------------------------
-@route
+@route - implemented
 GET /api/v1/auth/confirmemail/{JWT}
 
 @note
