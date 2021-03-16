@@ -20,4 +20,9 @@ const noteSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
+// get only the users that have not been deleted
+noteSchema.query.notDeleted = function () {
+  return this.where({ isDeleted: false });
+};
+
 export const Note = mongoose.model<INote>('Note', noteSchema);
