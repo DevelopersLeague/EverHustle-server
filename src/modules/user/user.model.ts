@@ -6,6 +6,7 @@ export interface IUser extends mongoose.Document {
   email: string;
   password: string;
   isEmailVerified: boolean;
+  isDeleted: boolean;
 }
 
 const userSchema = new mongoose.Schema({
@@ -14,6 +15,10 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: { type: String, require: true },
   isEmailVerified: {
+    type: Boolean,
+    default: false,
+  },
+  isDeleted: {
     type: Boolean,
     default: false,
   },
