@@ -56,7 +56,7 @@ export class AuthController implements IBaseController {
     const token = req.params['token'];
     const payload: any = jwt.verify(token, env.JWT_SECRET_KEY);
     await this.userService.markEmailConfirmed(payload.id);
-    res.redirect('https://www.google.com/');
+    res.redirect(env.CLIENT_URL);
   }
 
   /**
