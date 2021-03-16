@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
 });
 
-export const User = mongoose.model<IUser>('user', userSchema);
+export const User = mongoose.model<IUser>('User', userSchema);
