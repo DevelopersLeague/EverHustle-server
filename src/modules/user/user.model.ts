@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { INote } from '../note/note.model';
 
 export interface IUser extends mongoose.Document {
   firstName: string;
@@ -7,6 +8,7 @@ export interface IUser extends mongoose.Document {
   password: string;
   isEmailVerified: boolean;
   isDeleted: boolean;
+  notes: INote[];
 }
 
 const userSchema = new mongoose.Schema({
