@@ -1,5 +1,5 @@
 import { injectable, singleton } from 'tsyringe';
-import { NoteCreateDto, NoteResponseDto } from './dto';
+import { NoteCreateDto, NoteResponseDto, NoteUpdateDto } from './dto';
 import { INote } from './note.model';
 
 @injectable()
@@ -14,12 +14,22 @@ export class NoteMapper {
     return createNotedto;
   }
 
-  public modelToRespDto(user: INote): NoteResponseDto {
+  public anyToUpdateDto(body: any): NoteUpdateDto {
+    const updatedNotedto = new NoteUpdateDto(
+      body.id,
+      body.title,
+      body.content,
+      body.category
+    );
+    return updatedNotedto;
+  }
+
+  public modelToRespDto(note: INote): NoteResponseDto {
     const respDto = new NoteResponseDto(
-      user.id,
-      user.title,
-      user.content,
-      user.category
+      note.id,
+      note.title,
+      note.content,
+      note.category
     );
     return respDto;
   }
