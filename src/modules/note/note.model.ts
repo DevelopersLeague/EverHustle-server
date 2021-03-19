@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { IUser } from '../user';
 
 export interface INote extends mongoose.Document {
@@ -19,10 +19,5 @@ const noteSchema = new mongoose.Schema({
   },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
-
-// get only the users that have not been deleted
-noteSchema.query.notDeleted = function () {
-  return this.where({ isDeleted: false });
-};
 
 export const Note = mongoose.model<INote>('Note', noteSchema);

@@ -2,6 +2,7 @@ import { injectable, singleton } from 'tsyringe';
 import { NoteCreateDto } from './dto';
 import { INote, Note } from './note.model';
 import { NoteMapper } from './note.mapper';
+import { NoteUpdateDto } from './dto/note-update.dto';
 
 @injectable()
 @singleton()
@@ -38,6 +39,31 @@ export class NoteService {
     }
   }
 
+  /**
+   * @description
+   * updates the data of a note
+   */
+  public async updateNote(dto: NoteUpdateDto): Promise<INote> {
+    const note = await this.models.Note.findOne({
+      id: dto.id,
+      isDeleted: false,
+    });
+    if (note) {
+      if (dto.title) {
+        note.title = dto.title;
+      }
+      if (dto.category) {
+        note.category = dto.category;
+      }
+      if (dto.content) {
+        note.content = dto.content;
+      }
+      await note.save();
+      return Promise.resolve(note);
+    } else {
+      return Promise.reject(new Error('invalid note id'));
+    }
+  }
   /**
    * @description
    * finds and returns the note with given id
