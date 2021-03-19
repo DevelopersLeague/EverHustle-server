@@ -3,6 +3,7 @@ import { NoteCreateDto } from './dto';
 import { INote, Note } from './note.model';
 import { NoteMapper } from './note.mapper';
 import { NoteUpdateDto } from './dto/note-update.dto';
+import createHttpError from 'http-errors';
 
 @injectable()
 @singleton()
@@ -35,7 +36,7 @@ export class NoteService {
       await note.save();
       return;
     } else {
-      return Promise.reject(new Error('invalid note id'));
+      return Promise.reject(new createHttpError.BadRequest('invalid note id'));
     }
   }
 
@@ -61,9 +62,10 @@ export class NoteService {
       await note.save();
       return Promise.resolve(note);
     } else {
-      return Promise.reject(new Error('invalid note id'));
+      return Promise.reject(new createHttpError.BadRequest('invalid note id'));
     }
   }
+
   /**
    * @description
    * finds and returns the note with given id
@@ -73,7 +75,7 @@ export class NoteService {
     if (note) {
       return Promise.resolve(note);
     } else {
-      return Promise.reject(new Error('invalid note id'));
+      return Promise.reject(new createHttpError.BadRequest('invalid note id'));
     }
   }
 }
