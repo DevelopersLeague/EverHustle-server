@@ -210,12 +210,10 @@ Authorization: <token>
 
 @resp-body
 {
-    "note":{
-        "id":"<id of the note>"
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
-    }
+    "id":"<id of the note>"
+    "title":"<title of the note>"
+    "content":"<contents of the note>"
+    "category":"<category of the note>"
 }
 
 @errors
