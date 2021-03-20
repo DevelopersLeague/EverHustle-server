@@ -1,16 +1,15 @@
 import { injectable, singleton } from 'tsyringe';
 import { NoteCreateDto } from './dto';
 import { INote, Note } from './note.model';
-import { NoteMapper } from './note.mapper';
 import { NoteUpdateDto } from './dto/note-update.dto';
 import createHttpError from 'http-errors';
+import { User } from '../user';
+import { logger } from '../../common';
 
 @injectable()
 @singleton()
-export class NoteService {
-  public models = { Note: Note };
-
-  constructor(public noteMapper: NoteMapper) {}
+export class NotesService {
+  public models = { Note: Note, User: User };
 
   /**
    * @description
@@ -18,10 +17,21 @@ export class NoteService {
    */
   public async createNote(dto: NoteCreateDto): Promise<INote> {
     const note = new this.models.Note();
+    // logger.debug('user: %o', dto.user);
+    const user = await this.models.User.findById(dto.user.id).where({
+      isDeleted: false,
+    });
     note.title = dto.title;
     note.content = dto.content;
     note.category = dto.category;
+    if (user) {
+      // logger.debug('user found: %o', user);
+      note.user = user;
+    } else {
+      throw new Error('user not found');
+    }
     await note.save();
+    // logger.debug('%o', note);
     return Promise.resolve(note);
   }
 

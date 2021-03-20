@@ -39,7 +39,7 @@ export class AuthController implements IBaseController {
   /**
    * POST /api/v1/auth/signup
    */
-  public async signup(req: Request, res: Response): Promise<void> {
+  public async signup(req: Request, res: Response): Promise<any> {
     const user = await this.userService.createUser(
       this.userMapper.anyToCreateDto(req.body)
     );
@@ -47,6 +47,7 @@ export class AuthController implements IBaseController {
       user: this.userMapper.modelToRespDto(user),
       message: 'signup successful confirm email and login to continue',
     });
+    logger.debug('response sent');
   }
 
   /**

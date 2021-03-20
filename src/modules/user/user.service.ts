@@ -57,7 +57,9 @@ export class UserService {
    * finds and returns the user with given id
    */
   public async findUserByid(id: string): Promise<IUser> {
-    const user = await this.models.User.findById(id);
+    const user = await this.models.User.findById(id).where({
+      isDeleted: false,
+    });
     if (user) {
       return Promise.resolve(user);
     } else {

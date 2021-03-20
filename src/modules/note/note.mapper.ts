@@ -1,12 +1,14 @@
 import { injectable, singleton } from 'tsyringe';
+import { IUser } from '../user';
 import { NoteCreateDto, NoteResponseDto, NoteUpdateDto } from './dto';
 import { INote } from './note.model';
 
 @injectable()
 @singleton()
-export class NoteMapper {
-  public anyToCreateDto(body: any): NoteCreateDto {
+export class NotesMapper {
+  public anyToCreateDto(body: any, user: IUser): NoteCreateDto {
     const createNotedto = new NoteCreateDto(
+      user,
       body.title,
       body.content,
       body.category

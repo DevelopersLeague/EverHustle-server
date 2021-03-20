@@ -8,7 +8,7 @@ import createHttpError from 'http-errors';
 @injectable()
 @singleton()
 export class AuthMiddleware {
-  constructor(public userService: UserService) {
+  constructor(private readonly userService: UserService) {
     this.ensureAuth = this.ensureAuth.bind(this);
   }
   /**
