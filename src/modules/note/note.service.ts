@@ -3,13 +3,14 @@ import { NoteCreateDto } from './dto';
 import { INote, Note } from './note.model';
 import { NoteUpdateDto } from './dto/note-update.dto';
 import createHttpError from 'http-errors';
-import { User } from '../user';
+import { User, UserService } from '../user';
 import { logger } from '../../common';
 
 @injectable()
 @singleton()
 export class NotesService {
   public models = { Note: Note, User: User };
+  constructor(private readonly useService: UserService) {}
 
   /**
    * @description
@@ -18,9 +19,7 @@ export class NotesService {
   public async createNote(dto: NoteCreateDto): Promise<INote> {
     const note = new this.models.Note();
     // logger.debug('user: %o', dto.user);
-    const user = await this.models.User.findById(dto.user.id).where({
-      isDeleted: false,
-    });
+    const user = await this.useService.findUserByid(dto.user.id);
     note.title = dto.title;
     note.content = dto.content;
     note.category = dto.category;
@@ -88,6 +87,17 @@ export class NotesService {
       return Promise.resolve(note);
     } else {
       return Promise.reject(new createHttpError.BadRequest('invalid note id'));
+    }
+  }
+
+  public async getAllNotesOfUser(userId: string): Promise<INote[]> {
+    const user = await this.useService.findUserByid(userId);
+    const notes = await this.models.Note.find().where({ user: user._id });
+    logger.debug('notes: %o', notes);
+    if (notes) {
+      return Promise.resolve(notes);
+    } else {
+      return Promise.resolve([]);
     }
   }
 }

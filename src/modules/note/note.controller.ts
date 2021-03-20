@@ -32,11 +32,11 @@ export class NotesController implements IBaseController {
     //   this.authMiddleware.ensureAuth,
     //   catchAsync(this.getOneNote.bind(this))
     // );
-    // this.router.get(
-    //   '/',
-    //   this.authMiddleware.ensureAuth,
-    //   catchAsync(this.getallNotes.bind(this))
-    // );
+    this.router.get(
+      '/',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.getAllNotes.bind(this))
+    );
     // this.router.delete(
     //   '/:id',
     //   this.authMiddleware.ensureAuth,
@@ -57,5 +57,13 @@ export class NotesController implements IBaseController {
         .status(201)
         .json({ note: this.notesMapper.modelToRespDto(todo) });
     }
+  }
+
+  public async getAllNotes(req: Request, res: Response): Promise<any> {
+    const notes = await this.notesService.getAllNotesOfUser(req.user?.id);
+    const notesResp = notes.map((note) =>
+      this.notesMapper.modelToRespDto(note)
+    );
+    res.json({ notes: notesResp });
   }
 }

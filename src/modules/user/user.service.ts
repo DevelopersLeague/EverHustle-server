@@ -107,4 +107,21 @@ export class UserService {
       }
     }
   }
+
+  /**
+   * @description
+   * populates notes for the user
+   */
+  public async populateNotes(user: IUser): Promise<IUser> {
+    const myUser = await this.models.User.findById(user.id)
+      .where({
+        isDeleted: false,
+      })
+      .populate('notes');
+    if (myUser) {
+      return Promise.resolve(myUser);
+    } else {
+      throw new Error('user not found');
+    }
+  }
 }
