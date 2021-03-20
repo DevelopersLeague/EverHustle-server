@@ -170,11 +170,9 @@ Authorization: <token>
 
 @req-body
 {
-    "note":{
-        "title":"<title of the note>"
-        "content":"<contents of the note>"
-        "category":"<category of the note>"
-    }
+    "title":"<title of the note>"
+    "content":"<contents of the note>"
+    "category":"<category of the note>"
 }
 
 @resp-body
