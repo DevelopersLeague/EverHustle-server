@@ -89,7 +89,10 @@ export class NotesService {
       return Promise.reject(new createHttpError.BadRequest('invalid note id'));
     }
   }
-
+  /**
+   * @description
+   * get all the notes by a give user
+   */
   public async getAllNotesOfUser(userId: string): Promise<INote[]> {
     const user = await this.userService.findUserByid(userId);
     const notes = await this.models.Note.find().where({ user: user._id });

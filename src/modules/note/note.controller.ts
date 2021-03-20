@@ -60,7 +60,11 @@ export class NotesController implements IBaseController {
   }
 
   public async getAllNotes(req: Request, res: Response): Promise<any> {
-    const notes = await this.notesService.getAllNotesOfUser(req.user?.id);
+    const category = req.query.category;
+    let notes = await this.notesService.getAllNotesOfUser(req.user?.id);
+    if (category) {
+      notes = notes.filter((note) => note.category == category);
+    }
     const notesResp = notes.map((note) =>
       this.notesMapper.modelToRespDto(note)
     );
