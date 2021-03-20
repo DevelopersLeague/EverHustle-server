@@ -10,7 +10,7 @@ import { logger } from '../../common';
 @singleton()
 export class NotesService {
   public models = { Note: Note };
-  constructor(private readonly useService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
   /**
    * @description
@@ -19,7 +19,7 @@ export class NotesService {
   public async createNote(dto: NoteCreateDto): Promise<INote> {
     const note = new this.models.Note();
     // logger.debug('user: %o', dto.user);
-    const user = await this.useService.findUserByid(dto.user.id);
+    const user = await this.userService.findUserByid(dto.user.id);
     note.title = dto.title;
     note.content = dto.content;
     note.category = dto.category;
@@ -91,7 +91,7 @@ export class NotesService {
   }
 
   public async getAllNotesOfUser(userId: string): Promise<INote[]> {
-    const user = await this.useService.findUserByid(userId);
+    const user = await this.userService.findUserByid(userId);
     const notes = await this.models.Note.find().where({ user: user._id });
     // logger.debug('notes: %o', notes);
     if (notes) {
