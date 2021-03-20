@@ -8,6 +8,7 @@ import { EmailService } from '../email';
 import { UserLoginDto } from './dto/user-login.dto';
 import jwt from 'jsonwebtoken';
 import { UserMapper } from './user.mapper';
+import { logger } from '../../common';
 
 @injectable()
 @singleton()
@@ -85,7 +86,7 @@ export class UserService {
         );
       }
       // if passwords match
-      if (bcrypt.compare(dto.password, user.password)) {
+      if (await bcrypt.compare(dto.password, user.password)) {
         const token = jwt.sign(
           {
             id: user.id,

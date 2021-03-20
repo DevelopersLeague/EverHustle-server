@@ -56,8 +56,7 @@ export class NotesService {
    * updates the data of a note
    */
   public async updateNote(dto: NoteUpdateDto): Promise<INote> {
-    const note = await this.models.Note.findOne({
-      id: dto.id,
+    const note = await this.models.Note.findById(dto.id).where({
       isDeleted: false,
     });
     if (note) {

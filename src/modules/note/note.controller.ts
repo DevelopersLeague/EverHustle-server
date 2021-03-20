@@ -43,11 +43,11 @@ export class NotesController implements IBaseController {
       this.authMiddleware.ensureAuth,
       catchAsync(this.deleteOneNote.bind(this))
     );
-    // this.router.put(
-    //   '/:id',
-    //   this.authMiddleware.ensureAuth,
-    //   catchAsync(this.updateOneNote.bind(this))
-    // );
+    this.router.put(
+      '/:id',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.updateOneNote.bind(this))
+    );
   }
   /**
    * @url
@@ -117,6 +117,26 @@ export class NotesController implements IBaseController {
       throw new createHttpError.Unauthorized('unauthorized to delete todo');
     }
     await this.notesService.deleteNote(note.id);
-    res.json({ note: this.notesMapper.modelToRespDto(note) });
+    res.json({
+      message: 'note deleted',
+      note: this.notesMapper.modelToRespDto(note),
+    });
+  }
+
+  /**
+   * @url
+   * PUT /api/v1/notes/{:id}
+   *
+   * @description
+   * update one note
+   */
+  public async updateOneNote(req: Request, res: Response): Promise<any> {
+    const note = await this.notesService.updateNote(
+      this.notesMapper.anyToUpdateDto({ id: req.params['id'], ...req.body })
+    );
+    res.json({
+      message: 'note updated',
+      note: this.notesMapper.modelToRespDto(note),
+    });
   }
 }
