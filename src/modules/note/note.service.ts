@@ -9,7 +9,7 @@ import { logger } from '../../common';
 @injectable()
 @singleton()
 export class NotesService {
-  public models = { Note: Note, User: User };
+  public models = { Note: Note };
   constructor(private readonly useService: UserService) {}
 
   /**
@@ -93,7 +93,7 @@ export class NotesService {
   public async getAllNotesOfUser(userId: string): Promise<INote[]> {
     const user = await this.useService.findUserByid(userId);
     const notes = await this.models.Note.find().where({ user: user._id });
-    logger.debug('notes: %o', notes);
+    // logger.debug('notes: %o', notes);
     if (notes) {
       return Promise.resolve(notes);
     } else {
