@@ -39,7 +39,9 @@ export class NotesService {
    * deletes the note by marking it as deleted
    */
   public async deleteNote(id: string): Promise<void> {
-    const note = await this.models.Note.findOne({ id: id, isDeleted: false });
+    const note = await this.models.Note.findById(id).where({
+      isDeleted: false,
+    });
     if (note) {
       note.isDeleted = true;
       await note.save();
@@ -95,7 +97,10 @@ export class NotesService {
    */
   public async getAllNotesOfUser(userId: string): Promise<INote[]> {
     const user = await this.userService.findUserByid(userId);
-    const notes = await this.models.Note.find().where({ user: user._id });
+    const notes = await this.models.Note.find().where({
+      user: user._id,
+      isDeleted: false,
+    });
     // logger.debug('notes: %o', notes);
     if (notes) {
       return Promise.resolve(notes);

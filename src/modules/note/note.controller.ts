@@ -38,11 +38,11 @@ export class NotesController implements IBaseController {
       this.authMiddleware.ensureAuth,
       catchAsync(this.getAllNotes.bind(this))
     );
-    // this.router.delete(
-    //   '/:id',
-    //   this.authMiddleware.ensureAuth,
-    //   catchAsync(this.deleteOneNote.bind(this))
-    // );
+    this.router.delete(
+      '/:id',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.deleteOneNote.bind(this))
+    );
     // this.router.put(
     //   '/:id',
     //   this.authMiddleware.ensureAuth,
@@ -96,10 +96,27 @@ export class NotesController implements IBaseController {
   public async getOneNote(req: Request, res: Response): Promise<any> {
     const id = req.params['id'];
     const note = await this.notesService.findNoteByid(id);
-    logger.debug('note: %o', note);
+    // logger.debug('note: %o', note);
     if (req.user?.id != note.user) {
       throw new createHttpError.Unauthorized('unauthorized to access note');
     }
+    res.json({ note: this.notesMapper.modelToRespDto(note) });
+  }
+
+  /**
+   * @url
+   * DELETE /api/v1/notes/{:id}
+   *
+   * @description
+   * deletes a note
+   */
+  public async deleteOneNote(req: Request, res: Response): Promise<any> {
+    const note = await this.notesService.findNoteByid(req.params.id);
+    // confirm user
+    if (req.user?.id != note.user) {
+      throw new createHttpError.Unauthorized('unauthorized to delete todo');
+    }
+    await this.notesService.deleteNote(note.id);
     res.json({ note: this.notesMapper.modelToRespDto(note) });
   }
 }
