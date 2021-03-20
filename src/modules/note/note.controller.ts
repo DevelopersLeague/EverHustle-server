@@ -4,6 +4,7 @@ import { catchAsync, IBaseController, logger } from '../../common';
 import { NotesService } from './note.service';
 import { NotesMapper } from './note.mapper';
 import { AuthMiddleware } from '../auth';
+import createHttpError, { Unauthorized } from 'http-errors';
 
 @injectable()
 @singleton()
@@ -27,11 +28,11 @@ export class NotesController implements IBaseController {
       this.authMiddleware.ensureAuth,
       catchAsync(this.createOneNote.bind(this))
     );
-    // this.router.get(
-    //   '/:id',
-    //   this.authMiddleware.ensureAuth,
-    //   catchAsync(this.getOneNote.bind(this))
-    // );
+    this.router.get(
+      '/:id',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.getOneNote.bind(this))
+    );
     this.router.get(
       '/',
       this.authMiddleware.ensureAuth,
@@ -48,6 +49,13 @@ export class NotesController implements IBaseController {
     //   catchAsync(this.updateOneNote.bind(this))
     // );
   }
+  /**
+   * @url
+   * POST /api/v1/notes
+   *
+   * @description
+   * creates a new todo
+   */
   public async createOneNote(req: Request, res: Response): Promise<any> {
     if (req.user) {
       const todo = await this.notesService.createNote(
@@ -59,6 +67,13 @@ export class NotesController implements IBaseController {
     }
   }
 
+  /**
+   * @url
+   * GET /api/v1/notes
+   *
+   * @description
+   * gets all the todos
+   */
   public async getAllNotes(req: Request, res: Response): Promise<any> {
     const category = req.query.category;
     let notes = await this.notesService.getAllNotesOfUser(req.user?.id);
@@ -69,5 +84,22 @@ export class NotesController implements IBaseController {
       this.notesMapper.modelToRespDto(note)
     );
     res.json({ notes: notesResp });
+  }
+
+  /**
+   * @url
+   * GET /api/v1/notes/{:id}
+   *
+   * @description
+   * gets note by id
+   */
+  public async getOneNote(req: Request, res: Response): Promise<any> {
+    const id = req.params['id'];
+    const note = await this.notesService.findNoteByid(id);
+    logger.debug('note: %o', note);
+    if (req.user?.id != note.user) {
+      throw new createHttpError.Unauthorized('unauthorized to access note');
+    }
+    res.json({ note: this.notesMapper.modelToRespDto(note) });
   }
 }
