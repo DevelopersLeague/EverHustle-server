@@ -1,10 +1,11 @@
 import { Router, Request, Response, Handler } from 'express';
-import { injectable, singleton } from 'tsyringe';
+import { injectable, singleton, inject } from 'tsyringe';
 import { catchAsync, IBaseController, logger } from '../../common';
 import { UserMapper, UserService } from '../user';
 import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';
 import { AuthMiddleware } from './auth.middleware';
+import { tokens } from '../../config/tokens.config';
 
 @injectable()
 @singleton()
@@ -15,7 +16,7 @@ export class AuthController implements IBaseController {
   public middlewareAfter: Handler[] = [];
 
   constructor(
-    private readonly userService: UserService,
+    @inject(tokens.USER_SERVICE) private readonly userService: UserService,
     private readonly userMapper: UserMapper,
     private readonly authMiddleware: AuthMiddleware
   ) {

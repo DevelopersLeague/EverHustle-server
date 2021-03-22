@@ -7,7 +7,6 @@ import createHttpError from 'http-errors';
 import { EmailService } from '../email';
 import { UserLoginDto } from './dto/user-login.dto';
 import jwt from 'jsonwebtoken';
-import { UserMapper } from './user.mapper';
 import { tokens } from '../../config/tokens.config';
 import { Model } from 'mongoose';
 
@@ -18,8 +17,7 @@ export class UserService {
 
   constructor(
     @inject(tokens.USER_MODEL) private readonly User: Model<IUser>,
-    private readonly emailService: EmailService,
-    private readonly userMapper: UserMapper
+    @inject(tokens.EMAIL_SERVICE) private readonly emailService: EmailService
   ) {}
 
   /**

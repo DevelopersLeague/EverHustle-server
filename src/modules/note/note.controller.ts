@@ -1,10 +1,11 @@
 import { Router, Request, Response, Handler } from 'express';
-import { injectable, singleton } from 'tsyringe';
+import { inject, injectable, singleton } from 'tsyringe';
 import { catchAsync, IBaseController, logger } from '../../common';
 import { NotesService } from './note.service';
 import { NotesMapper } from './note.mapper';
 import { AuthMiddleware } from '../auth';
 import createHttpError, { Unauthorized } from 'http-errors';
+import { tokens } from '../../config/tokens.config';
 
 @injectable()
 @singleton()
@@ -15,7 +16,7 @@ export class NotesController implements IBaseController {
   public middlewareAfter: Handler[] = [];
 
   constructor(
-    private readonly notesService: NotesService,
+    @inject(tokens.NOTE_SERVICE) private readonly notesService: NotesService,
     private readonly notesMapper: NotesMapper,
     private readonly authMiddleware: AuthMiddleware
   ) {

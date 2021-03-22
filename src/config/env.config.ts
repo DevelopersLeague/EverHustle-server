@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-console.debug('code is running in config.env');
 dotenv.config();
 
 if (!process.env.MONGO_URI) {
