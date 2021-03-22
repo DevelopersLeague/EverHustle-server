@@ -1,19 +1,22 @@
-import { injectable, singleton } from 'tsyringe';
-import { sgMail } from '../../config/sgmail.config';
+import { injectable, singleton, inject } from 'tsyringe';
 import { CreateEmailDto } from './dto';
 import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';
+import { tokens } from '../../config/tokens.config';
+import { MailService } from '@sendgrid/mail';
 
 @injectable()
 @singleton()
 export class EmailService {
-  public sgMail = sgMail;
+  constructor(
+    @inject(tokens.EMAIL_PROVIDER) private readonly sgMail: MailService
+  ) {}
   /**
    * @description
    * send an email
    */
   public async sendMail(dto: CreateEmailDto): Promise<void> {
-    await sgMail.send({
+    await this.sgMail.send({
       to: dto.to,
       from: dto.from,
       subject: dto.subject,
