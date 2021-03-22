@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { INote } from '../note/note.model';
 
 export interface IUser extends mongoose.Document {

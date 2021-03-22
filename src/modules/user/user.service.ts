@@ -1,23 +1,25 @@
-import { injectable, singleton } from 'tsyringe';
+import { inject, injectable, singleton } from 'tsyringe';
 import { CreateUserDto } from './dto';
 import bcrypt from 'bcrypt';
-import { IUser, User } from './user.model';
+import { IUser } from './user.model';
 import { env } from '../../config/env.config';
-import createHttpError, { HttpError } from 'http-errors';
+import createHttpError from 'http-errors';
 import { EmailService } from '../email';
 import { UserLoginDto } from './dto/user-login.dto';
 import jwt from 'jsonwebtoken';
 import { UserMapper } from './user.mapper';
-import { logger } from '../../common';
+import { tokens } from '../../config/tokens.config';
+import { Model } from 'mongoose';
 
 @injectable()
 @singleton()
 export class UserService {
-  public models = { User: User };
+  // public models = { User: User };
 
   constructor(
-    public emailService: EmailService,
-    public userMapper: UserMapper
+    @inject(tokens.USER_MODEL) private readonly User: Model<IUser>,
+    private readonly emailService: EmailService,
+    private readonly userMapper: UserMapper
   ) {}
 
   /**
@@ -25,13 +27,13 @@ export class UserService {
    * creates a new user
    */
   public async createUser(dto: CreateUserDto): Promise<IUser> {
-    const existingUser = await this.models.User.findOne({ email: dto.email });
+    const existingUser = await this.User.findOne({ email: dto.email });
     if (existingUser) {
       return Promise.reject(
         new createHttpError.BadRequest('email already taken')
       );
     }
-    const user = new this.models.User();
+    const user = new this.User();
     user.firstName = dto.firstName;
     user.lastName = dto.lastName;
     user.email = dto.email;
@@ -46,7 +48,7 @@ export class UserService {
    * marks the email as confirmed
    */
   public async markEmailConfirmed(id: string): Promise<void> {
-    const user = await this.models.User.findById(id);
+    const user = await this.User.findById(id);
     if (user) {
       user.isEmailVerified = true;
       await user.save();
@@ -58,7 +60,7 @@ export class UserService {
    * finds and returns the user with given id
    */
   public async findUserByid(id: string): Promise<IUser> {
-    const user = await this.models.User.findById(id).where({
+    const user = await this.User.findById(id).where({
       isDeleted: false,
     });
     if (user) {
@@ -74,7 +76,7 @@ export class UserService {
    * returns signed jwt containing user data
    */
   public async login(dto: UserLoginDto): Promise<string> {
-    const user = await this.models.User.findOne({ email: dto.email });
+    const user = await this.User.findOne({ email: dto.email });
     if (!user) {
       return Promise.reject(new createHttpError.Unauthorized('invalid email'));
     } else {
@@ -114,7 +116,7 @@ export class UserService {
    * populates notes for the user
    */
   public async populateNotes(user: IUser): Promise<IUser> {
-    const myUser = await this.models.User.findById(user.id)
+    const myUser = await this.User.findById(user.id)
       .where({
         isDeleted: false,
       })

@@ -1,0 +1,6 @@
+export const tokens = {
+  USER_MODEL: 'USER_MODEL',
+  NOTE_MODEL: 'NOTE_MODEL',
+  USER_SERVICE: 'USER_SERVICE',
+  NOTE_SERVICE: 'NOTE_SERVICE',
+};
