@@ -132,6 +132,11 @@ export class NotesController implements IBaseController {
    * update one note
    */
   public async updateOneNote(req: Request, res: Response): Promise<any> {
+    const note1 = await this.notesService.findNoteByid(req.params.id);
+    // confirm user
+    if (req.user?.id != note1.user) {
+      throw new createHttpError.Unauthorized('unauthorized to delete todo');
+    }
     const note = await this.notesService.updateNote(
       this.notesMapper.anyToUpdateDto({ id: req.params['id'], ...req.body })
     );
