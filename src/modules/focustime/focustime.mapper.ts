@@ -36,7 +36,7 @@ export class FocusTimeMapper {
     min = min % 60;
     const timeString =
       hr.toString() + ':' + min.toString() + ':' + sec.toString();
-    logger.debug('mapper: timeString: %o', timeString);
+    // logger.debug('mapper: timeString: %o', timeString);
     return timeString;
   }
 
