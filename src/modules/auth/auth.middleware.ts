@@ -4,6 +4,7 @@ import { UserService } from '../user';
 import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';
 import createHttpError from 'http-errors';
+import { logger } from '../../common';
 
 @injectable()
 @singleton()
