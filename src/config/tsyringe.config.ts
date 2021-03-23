@@ -6,6 +6,7 @@ import { sgMail } from './sgmail.config';
 import { NotesService, Note } from '../modules/note';
 import { EmailService } from '../modules/email';
 import { FocusTime } from '../modules/focustime/focustime.model';
+import { FocusTimeService } from '../modules/focustime/focustime.service';
 
 @registry([
   {
@@ -43,6 +44,10 @@ import { FocusTime } from '../modules/focustime/focustime.model';
     useFactory: instanceCachingFactory((_) => {
       return FocusTime;
     }),
+  },
+  {
+    token: tokens.FOCUSTIME_SERVICE,
+    useClass: FocusTimeService,
   },
 ])
 class myRegistry {}

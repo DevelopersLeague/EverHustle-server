@@ -273,7 +273,7 @@ Authorization: <token>
 @resp-body
 {
     "date":"<today's date in YYYY-MM-DD format>"
-    "time":"<total time focused in HH:MM:SS format>"
+    "time":"<time focused in HH:MM:SS format>"
 }
 
 @errors

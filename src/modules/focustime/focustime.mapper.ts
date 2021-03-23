@@ -7,8 +7,8 @@ import { IFocusTime } from './focustime.model';
 export class FocusTimeMapper {
   public timeStringToCreateDto(
     timeString: string,
-    user: IUser,
-    dateString: Date
+    dateString: string,
+    user: IUser
   ): FocusTimeCreateDto {
     const dto = new FocusTimeCreateDto(
       Number(timeString.split(':')[0]),
@@ -36,7 +36,18 @@ export class FocusTimeMapper {
     min = min % 60;
     const timeString =
       hr.toString() + ':' + min.toString() + ':' + sec.toString();
-    logger.debug('timeString: %o', timeString);
+    logger.debug('mapper: timeString: %o', timeString);
+    return timeString;
+  }
+
+  public modelToTimeString(focusTime: IFocusTime): string {
+    const timeString =
+      focusTime.hr.toString() +
+      ':' +
+      focusTime.min.toString() +
+      ':' +
+      focusTime.sec.toString();
+    // logger.debug('timeString: %o', timeString);
     return timeString;
   }
 }
