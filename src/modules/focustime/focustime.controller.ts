@@ -50,7 +50,7 @@ export class FocusTimeController implements IBaseController {
     const timeString = this.focusTimeMapper.modelListToTimeString(
       await this.focusTimeService.getAllFocusTimeofDate(date)
     );
-    res.json({ date: date.toISOString(), time: timeString });
+    res.json({ date: date.toISOString().split('T')[0], time: timeString });
   }
 
   /**
@@ -71,7 +71,7 @@ export class FocusTimeController implements IBaseController {
     );
     res.json({
       time: this.focusTimeMapper.modelToTimeString(focusTime),
-      date: new Date(dateString).toISOString(),
+      date: new Date(dateString).toISOString().split('T')[0],
     });
   }
 }
