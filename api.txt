@@ -386,11 +386,9 @@ Authorization: <token>
 
 @req-body
 {
-    "goal":{
-        "title":"<title of the goal>"
-        "content":"<contents of the goal>"
-        "category":"<category of the goal>"
-    }
+    "title":"<title of the goal>"
+    "content":"<contents of the goal>"
+    "category":"<category of the goal>"
 }
 
 @resp-body
@@ -420,12 +418,10 @@ Authorization: <token>
 
 @req-body (include only the fields to be updates)
 {
-    "goal":{
-        "title":"<title of the goal>"
-        "content":"<contents of the goal>"
-        "category":"<category of the goal>"
-        "isCompleted": <true/false>
-    }
+    "title":"<title of the goal>"
+    "content":"<contents of the goal>"
+    "category":"<category of the goal>"
+    "isCompleted": <true/false>
 }
 
 @resp-body
