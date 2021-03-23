@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose from 'mongoose';
 import { IUser } from '../user';
 
 export interface IFocusTime extends mongoose.Document {
