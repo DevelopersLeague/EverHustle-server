@@ -27,8 +27,16 @@ export class FocusTimeController implements IBaseController {
   }
 
   public initRoutes(): void {
-    this.router.get('/:dateString', catchAsync(this.getFocusTime.bind(this)));
-    this.router.post('/', catchAsync(this.createFocusTime.bind(this)));
+    this.router.get(
+      '/:dateString',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.getFocusTime.bind(this))
+    );
+    this.router.post(
+      '/',
+      this.authMiddleware.ensureAuth,
+      catchAsync(this.createFocusTime.bind(this))
+    );
   }
 
   /**

@@ -7,6 +7,7 @@ import { logger } from './common';
 import { env } from './config/env.config';
 import { AuthController } from './modules/auth';
 import { NotesController } from './modules/note';
+import { FocusTimeController } from './modules/focustime/focustime.controller';
 
 // const myApp = new App([AuthController, NotesController]);
 // myApp.expressApp.listen(env.PORT, () => {
@@ -20,7 +21,11 @@ mongoose
   })
   .then(() => {
     logger.info('database connection successful');
-    const myApp = new App([AuthController, NotesController]);
+    const myApp = new App([
+      AuthController,
+      NotesController,
+      FocusTimeController,
+    ]);
     myApp.expressApp.listen(env.PORT, () => {
       logger.info(`server started at port ${env.PORT}`);
     });

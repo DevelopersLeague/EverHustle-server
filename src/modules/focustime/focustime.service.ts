@@ -1,10 +1,12 @@
-import { inject } from 'tsyringe';
+import { inject, injectable, singleton } from 'tsyringe';
 import { tokens } from '../../config/tokens.config';
 import { UserService } from '../user';
 import { FocusTimeCreateDto } from './dto/focustime-create.dto';
 import { IFocusTime } from './focustime.model';
 import { Model } from 'mongoose';
 
+@injectable()
+@singleton()
 export class FocusTimeService {
   constructor(
     @inject(tokens.USER_SERVICE)
