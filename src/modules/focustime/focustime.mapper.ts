@@ -27,8 +27,8 @@ export class FocusTimeMapper {
     hr = 0;
     times.forEach((time) => {
       sec = sec + time.sec;
-      min = sec + time.min;
-      hr = sec + time.hr;
+      min = min + time.min;
+      hr = hr + time.hr;
     });
     min += Math.floor(sec / 60);
     sec = sec % 60;
