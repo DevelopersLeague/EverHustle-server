@@ -1,4 +1,5 @@
 import mongoose, { Model } from 'mongoose';
+import { IFocusTime } from '../focustime/focustime.model';
 import { INote } from '../note/note.model';
 
 export interface IUser extends mongoose.Document {
@@ -9,6 +10,7 @@ export interface IUser extends mongoose.Document {
   isEmailVerified: boolean;
   isDeleted: boolean;
   notes: INote[];
+  focusTimes: IFocusTime[];
 }
 
 const userSchema = new mongoose.Schema({
@@ -25,6 +27,7 @@ const userSchema = new mongoose.Schema({
     default: false,
   },
   notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
+  focusTimes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusTime' }],
 });
 
 export const User = mongoose.model<IUser>('User', userSchema);
