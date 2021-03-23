@@ -11,8 +11,8 @@ import { FocusTimeMapper } from './focustime.mapper';
 
 @injectable()
 @singleton()
-export class AuthController implements IBaseController {
-  public path = '/api/v1/auth';
+export class FocusTimeController implements IBaseController {
+  public path = '/api/v1/focustime';
   public router = Router();
   public middlewareBefore: Handler[] = [];
   public middlewareAfter: Handler[] = [];
@@ -28,6 +28,7 @@ export class AuthController implements IBaseController {
 
   public initRoutes(): void {
     this.router.get('/:dateString', catchAsync(this.getFocusTime.bind(this)));
+    this.router.post('/', catchAsync(this.createFocusTime.bind(this)));
   }
 
   /**
