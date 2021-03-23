@@ -1,6 +1,6 @@
 import { inject, injectable, singleton } from 'tsyringe';
 import { tokens } from '../../config/tokens.config';
-import { UserService } from '../user';
+import { UserService, IUser } from '../user';
 import { FocusTimeCreateDto } from './dto/focustime-create.dto';
 import { IFocusTime } from './focustime.model';
 import { Model } from 'mongoose';
@@ -35,10 +35,14 @@ export class FocusTimeService {
    * @description
    * returns list of all focusTimes of a certain date
    */
-  public async getAllFocusTimeofDate(date: Date): Promise<IFocusTime[]> {
+  public async getAllFocusTimeofDate(
+    date: Date,
+    user: IUser
+  ): Promise<IFocusTime[]> {
     const times = await this.FocusTime.find().where({
       date: date,
       isDeleted: false,
+      user: user._id,
     });
     return Promise.resolve(times);
   }

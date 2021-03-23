@@ -48,7 +48,7 @@ export class FocusTimeController implements IBaseController {
   public async getFocusTime(req: Request, res: Response): Promise<any> {
     const date = new Date(req.params['dateString']);
     const timeString = this.focusTimeMapper.modelListToTimeString(
-      await this.focusTimeService.getAllFocusTimeofDate(date)
+      await this.focusTimeService.getAllFocusTimeofDate(date, req.user!)
     );
     res.json({ date: date.toISOString().split('T')[0], time: timeString });
   }
