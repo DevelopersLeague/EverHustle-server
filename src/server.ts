@@ -17,7 +17,7 @@ mongoose
   .connect(env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    authSource: 'admin',
+    // authSource: 'admin',
   })
   .then(() => {
     logger.info('database connection successful');
