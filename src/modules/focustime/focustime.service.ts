@@ -4,6 +4,7 @@ import { UserService, IUser } from '../user';
 import { FocusTimeCreateDto } from './dto/focustime-create.dto';
 import { IFocusTime } from './focustime.model';
 import { Model } from 'mongoose';
+import { logger } from '../../common';
 
 @injectable()
 @singleton()
@@ -28,6 +29,8 @@ export class FocusTimeService {
     focusTime.user = user;
     focusTime.date = dto.date;
     await focusTime.save();
+    await focusTime.populate('user').execPopulate();
+    logger.debug('focustime: %o', focusTime);
     return Promise.resolve(focusTime);
   }
 
