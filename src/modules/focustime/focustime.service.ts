@@ -29,8 +29,6 @@ export class FocusTimeService {
     focusTime.user = user;
     focusTime.date = dto.date;
     await focusTime.save();
-    await focusTime.populate('user').execPopulate();
-    logger.debug('focustime: %o', focusTime);
     return Promise.resolve(focusTime);
   }
 
