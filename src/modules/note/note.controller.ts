@@ -97,8 +97,7 @@ export class NotesController implements IBaseController {
   public async getOneNote(req: Request, res: Response): Promise<any> {
     const id = req.params['id'];
     const note = await this.notesService.findNoteByid(id);
-    // logger.debug('note: %o', note);
-    if (req.user?.id != note.user) {
+    if (req.user?.id !== note.user.id) {
       throw new createHttpError.Unauthorized('unauthorized to access note');
     }
     res.json({ note: this.notesMapper.modelToRespDto(note) });
@@ -112,10 +111,10 @@ export class NotesController implements IBaseController {
    * deletes a note
    */
   public async deleteOneNote(req: Request, res: Response): Promise<any> {
-    const note = await this.notesService.findNoteByid(req.params.id);
-    // confirm user
-    if (req.user?.id != note.user) {
-      throw new createHttpError.Unauthorized('unauthorized to delete todo');
+    const id = req.params['id'];
+    const note = await this.notesService.findNoteByid(id);
+    if (req.user?.id !== note.user.id) {
+      throw new createHttpError.Unauthorized('unauthorized to access note');
     }
     await this.notesService.deleteNote(note.id);
     res.json({
@@ -134,8 +133,10 @@ export class NotesController implements IBaseController {
   public async updateOneNote(req: Request, res: Response): Promise<any> {
     const note1 = await this.notesService.findNoteByid(req.params.id);
     // confirm user
-    if (req.user?.id != note1.user) {
-      throw new createHttpError.Unauthorized('unauthorized to delete todo');
+    logger.debug('note.user: %o', note1.user);
+    logger.debug('req.user: %o', req.user);
+    if (req.user?.id != note1.user.id) {
+      throw new createHttpError.Unauthorized('unauthorized to update todo');
     }
     const note = await this.notesService.updateNote(
       this.notesMapper.anyToUpdateDto({ id: req.params['id'], ...req.body })

@@ -85,9 +85,11 @@ export class NotesService {
    * finds and returns the note with given id
    */
   public async findNoteByid(id: string): Promise<INote> {
-    const note = await this.Note.findById(id).where({
-      isDeleted: false,
-    });
+    const note = await this.Note.findById(id)
+      .where({
+        isDeleted: false,
+      })
+      .populate('user');
     if (note) {
       return Promise.resolve(note);
     } else {
