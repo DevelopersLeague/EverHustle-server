@@ -8,6 +8,7 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 8000
+#expose not supported by heroku
+# EXPOSE 8000
 
 CMD ["npm","start"]
