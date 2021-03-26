@@ -1,1 +1,1 @@
-docker build aniketmore311/everhustle-server < ../Dockerfile.dev
+docker build -f Dockerfile.dev -t aniketmore311/everhutle-server . 
