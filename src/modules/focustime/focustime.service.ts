@@ -28,6 +28,9 @@ export class FocusTimeService {
     const user = await this.userService.findUserByid(dto.user.id);
     focusTime.user = user;
     focusTime.date = dto.date;
+    await user.populate('focustimes').execPopulate();
+    user.focusTimes.push(focusTime);
+    await user.save();
     await focusTime.save();
     return Promise.resolve(focusTime);
   }
