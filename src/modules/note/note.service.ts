@@ -28,7 +28,6 @@ export class NotesService {
     note.content = dto.content;
     note.category = dto.category;
     if (user) {
-      // logger.debug('user found: %o', user);
       note.user = user;
       await user.populate('notes').execPopulate();
       console.log(user.notes);
