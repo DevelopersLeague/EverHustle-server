@@ -458,6 +458,7 @@ Authorization: <token>
         "title":"<title of the goal>"
         "content":"<contents of the goal>"
         "category":"<category of the goal>"
+        "isCompleted": <true/false>
     }
 }
 
