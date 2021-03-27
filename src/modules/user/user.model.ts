@@ -1,5 +1,6 @@
 import mongoose, { Model } from 'mongoose';
 import { IFocusTime } from '../focustime/focustime.model';
+import { IGoal } from '../goal/goal.model';
 import { INote } from '../note/note.model';
 
 export interface IUser extends mongoose.Document {
@@ -11,6 +12,7 @@ export interface IUser extends mongoose.Document {
   isDeleted: boolean;
   notes: INote[];
   focusTimes: IFocusTime[];
+  goals: IGoal[];
 }
 
 const userSchema = new mongoose.Schema({
@@ -28,6 +30,7 @@ const userSchema = new mongoose.Schema({
   },
   notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
   focusTimes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusTime' }],
+  goals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Goal' }],
 });
 
 export const User = mongoose.model<IUser>('User', userSchema);
