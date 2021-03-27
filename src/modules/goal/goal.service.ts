@@ -4,13 +4,15 @@ import { IGoal } from './goal.model';
 import { GoalCreateDto } from './dto/goal-create.dto';
 import createHttpError from 'http-errors';
 import { GoalUpdateDto } from './dto/goal-update.dto';
-import { injectable, singleton } from 'tsyringe';
+import { inject, injectable, singleton } from 'tsyringe';
+import { tokens } from '../../config/tokens.config';
 
 @injectable()
 @singleton()
 export class GoalService {
   constructor(
     private readonly userService: UserService,
+    @inject(tokens.GOAL_MODEL)
     private readonly Goal: Model<IGoal>
   ) {}
 

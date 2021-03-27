@@ -10,15 +10,17 @@ import createHttpError from 'http-errors';
 @injectable()
 @singleton()
 export class GoalController implements IBaseController {
-  public path = '/goals';
-  public router: Router = Router();
+  public path = '/api/v1/goals';
+  public router = Router();
   public middlewareBefore = [];
   public middlewareAfter = [];
   constructor(
     private readonly goalService: GoalService,
     private readonly goalMapper: GoalMapper,
     private readonly authMiddleware: AuthMiddleware
-  ) {}
+  ) {
+    this.initRoutes();
+  }
   public initRoutes(): void {
     this.router.get(
       '/',
@@ -68,9 +70,13 @@ export class GoalController implements IBaseController {
    */
   public async getAllGoals(req: Request, res: Response): Promise<any> {
     await req.user?.populate('goals').execPopulate();
-    const goalsResp = req.user?.goals.map((goal) => {
-      return this.goalMapper.modelToRespDto(goal);
-    });
+    const goalsResp = req.user?.goals
+      .filter((goal) => {
+        return goal.isDeleted === false;
+      })
+      .map((goal) => {
+        return this.goalMapper.modelToRespDto(goal);
+      });
     res.json({ goals: goalsResp });
   }
 
