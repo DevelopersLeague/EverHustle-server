@@ -8,6 +8,7 @@ import { env } from './config/env.config';
 import { AuthController } from './modules/auth';
 import { NotesController } from './modules/note';
 import { FocusTimeController } from './modules/focustime/focustime.controller';
+import { GoalController } from './modules/goal/goal.controller';
 
 // const myApp = new App([AuthController, NotesController]);
 // myApp.expressApp.listen(env.PORT, () => {
@@ -25,6 +26,7 @@ mongoose
       AuthController,
       NotesController,
       FocusTimeController,
+      GoalController,
     ]);
     myApp.expressApp.listen(env.PORT, () => {
       logger.info(`server started at port ${env.PORT}`);

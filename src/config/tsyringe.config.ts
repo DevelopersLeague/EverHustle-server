@@ -7,6 +7,7 @@ import { NotesService, Note } from '../modules/note';
 import { EmailService } from '../modules/email';
 import { FocusTime } from '../modules/focustime/focustime.model';
 import { FocusTimeService } from '../modules/focustime/focustime.service';
+import { Goal } from '../modules/goal/goal.model';
 
 @registry([
   {
@@ -48,6 +49,12 @@ import { FocusTimeService } from '../modules/focustime/focustime.service';
   {
     token: tokens.FOCUSTIME_SERVICE,
     useClass: FocusTimeService,
+  },
+  {
+    token: tokens.GOAL_MODEL,
+    useFactory: instanceCachingFactory((_) => {
+      return Goal;
+    }),
   },
 ])
 class myRegistry {}
