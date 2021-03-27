@@ -30,6 +30,10 @@ export class NotesService {
     if (user) {
       // logger.debug('user found: %o', user);
       note.user = user;
+      await user.populate('notes').execPopulate();
+      console.log(user.notes);
+      user.notes.push(note);
+      await user.save();
     } else {
       throw new Error('user not found');
     }
