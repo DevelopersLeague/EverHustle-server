@@ -24,7 +24,9 @@ export class GoalMapper {
       goal.title,
       goal.content,
       goal.category,
-      goal.isCompleted
+      goal.isCompleted,
+      goal.createdAt,
+      goal.updatedAt
     );
     return dto;
   }

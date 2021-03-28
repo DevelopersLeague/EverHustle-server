@@ -31,7 +31,9 @@ export class NotesMapper {
       note.id,
       note.title,
       note.content,
-      note.category
+      note.category,
+      note.createdAt,
+      note.updatedAt
     );
     return respDto;
   }
