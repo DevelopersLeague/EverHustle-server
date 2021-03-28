@@ -70,13 +70,18 @@ export class GoalController implements IBaseController {
    */
   public async getAllGoals(req: Request, res: Response): Promise<any> {
     await req.user?.populate('goals').execPopulate();
-    const goalsResp = req.user?.goals
-      .filter((goal) => {
-        return goal.isDeleted === false;
-      })
-      .map((goal) => {
-        return this.goalMapper.modelToRespDto(goal);
+    const category = req.query.category;
+    let goals = req.user?.goals.filter((goal) => {
+      return goal.isDeleted === false;
+    });
+    if (category) {
+      goals = goals?.filter((goal) => {
+        return goal.category == category;
       });
+    }
+    const goalsResp = goals?.map((goal) => {
+      return this.goalMapper.modelToRespDto(goal);
+    });
     res.json({ goals: goalsResp });
   }
 
