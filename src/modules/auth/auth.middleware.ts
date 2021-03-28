@@ -17,6 +17,7 @@ export class AuthMiddleware {
    * ensure that the authToken is valid and attach the user object to request object
    */
   public ensureAuth(req: Request, res: Response, next: NextFunction): void {
+    // logger.debug('%o', req.headers.authorization);
     const token = req.headers['authorization']?.split(' ')[1];
     if (token) {
       try {

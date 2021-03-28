@@ -13,24 +13,29 @@ export interface IUser extends mongoose.Document {
   notes: INote[];
   focusTimes: IFocusTime[];
   goals: IGoal[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const userSchema = new mongoose.Schema({
-  firstName: String,
-  lastName: String,
-  email: String,
-  password: { type: String, require: true },
-  isEmailVerified: {
-    type: Boolean,
-    default: false,
+const userSchema = new mongoose.Schema(
+  {
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: { type: String, require: true },
+    isEmailVerified: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
+    focusTimes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusTime' }],
+    goals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Goal' }],
   },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  },
-  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Note' }],
-  focusTimes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'FocusTime' }],
-  goals: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Goal' }],
-});
+  { timestamps: true }
+);
 
 export const User = mongoose.model<IUser>('User', userSchema);

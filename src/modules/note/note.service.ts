@@ -30,7 +30,7 @@ export class NotesService {
     if (user) {
       note.user = user;
       await user.populate('notes').execPopulate();
-      console.log(user.notes);
+      // console.log(user.notes);
       user.notes.push(note);
       await user.save();
     } else {

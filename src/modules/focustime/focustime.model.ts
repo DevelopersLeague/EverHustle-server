@@ -8,16 +8,22 @@ export interface IFocusTime extends mongoose.Document {
   date: Date;
   user: IUser;
   isDeleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-const focusTimeSchema = new mongoose.Schema({
-  hr: Number,
-  min: Number,
-  sec: Number,
-  date: Date,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  isDeleted: { type: Boolean, default: false },
-});
+const focusTimeSchema = new mongoose.Schema(
+  {
+    hr: Number,
+    min: Number,
+    sec: Number,
+    date: Date,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    isDeleted: { type: Boolean, default: false },
+  },
+
+  { timestamps: true }
+);
 
 export const FocusTime = mongoose.model<IFocusTime>(
   'FocusTime',

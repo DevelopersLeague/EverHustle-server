@@ -97,6 +97,8 @@ export class NotesController implements IBaseController {
   public async getOneNote(req: Request, res: Response): Promise<any> {
     const id = req.params['id'];
     const note = await this.notesService.findNoteByid(id);
+    console.log(note.createdAt);
+    console.log(note.updatedAt);
     await note.populate('user').execPopulate();
     if (req.user?.id !== note.user.id) {
       throw new createHttpError.Unauthorized('unauthorized to access note');
