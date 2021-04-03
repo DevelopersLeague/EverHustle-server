@@ -3,20 +3,26 @@ export class ReminderRespDto {
   public title: string;
   public content: string;
   public category: string;
-  public timeStamp: Date;
+  public timeStamp: string;
+  public createdAt: string;
+  public updatedAt: string;
 
   private constructor(
     id: string,
     title: string,
     content: string,
     category: string,
-    timeStamp: Date
+    timeStamp: string,
+    createdAt: string,
+    updatedAt: string
   ) {
     this.id = id;
     this.title = title;
     this.content = content;
     this.category = category;
     this.timeStamp = timeStamp;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
   public static create({
@@ -25,13 +31,25 @@ export class ReminderRespDto {
     content,
     category,
     timeStamp,
+    createdAt,
+    updatedAt,
   }: {
     id: string;
     title: string;
     content: string;
     category: string;
-    timeStamp: Date;
+    timeStamp: string;
+    createdAt: string;
+    updatedAt: string;
   }): ReminderRespDto {
-    return new ReminderRespDto(id, title, content, category, timeStamp);
+    return new ReminderRespDto(
+      id,
+      title,
+      content,
+      category,
+      timeStamp,
+      createdAt,
+      updatedAt
+    );
   }
 }

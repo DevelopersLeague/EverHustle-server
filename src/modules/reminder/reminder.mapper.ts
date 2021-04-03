@@ -9,25 +9,25 @@ import { IReminder } from './reminder.model';
 @singleton()
 export class ReminderMapper {
   public anyToCreateDto(body: any, user: IUser): ReminderCreateDto {
-    const createDto = ReminderCreateDto.create({
+    return ReminderCreateDto.create({
       userId: user.id,
       title: body.title,
       content: body.content,
       category: body.category,
-      timeStamp: body.timeStamp,
+      timeStamp: new Date(body.timeStamp),
     });
-    return createDto;
   }
 
   public modelToRespDto(reminder: IReminder): ReminderRespDto {
-    const respDto = ReminderRespDto.create({
+    return ReminderRespDto.create({
       id: reminder.id,
       title: reminder.title,
       content: reminder.content,
       category: reminder.category,
-      timeStamp: reminder.timeStamp,
+      timeStamp: reminder.timeStamp.toISOString(),
+      createdAt: reminder.createdAt.toISOString(),
+      updatedAt: reminder.updatedAt.toISOString(),
     });
-    return respDto;
   }
 
   public anyToUpdateDto(body: any, id: string): ReminderUpdateDto {
@@ -36,7 +36,7 @@ export class ReminderMapper {
       title: body.title,
       content: body.content,
       category: body.category,
-      timeStamp: body.timeStamp,
+      timeStamp: new Date(body.timeStamp),
     });
   }
 }
