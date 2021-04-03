@@ -8,6 +8,8 @@ import { EmailService } from '../modules/email';
 import { FocusTime } from '../modules/focustime/focustime.model';
 import { FocusTimeService } from '../modules/focustime/focustime.service';
 import { Goal } from '../modules/goal/goal.model';
+import { ReminderService } from '../modules/reminder/reminder.service';
+import { Reminder } from '../modules/reminder/reminder.model';
 
 @registry([
   {
@@ -54,6 +56,16 @@ import { Goal } from '../modules/goal/goal.model';
     token: tokens.GOAL_MODEL,
     useFactory: instanceCachingFactory((_) => {
       return Goal;
+    }),
+  },
+  {
+    token: tokens.REMINDER_SERVICE,
+    useClass: ReminderService,
+  },
+  {
+    token: tokens.REMINDER_MODEL,
+    useFactory: instanceCachingFactory((_) => {
+      return Reminder;
     }),
   },
 ])
