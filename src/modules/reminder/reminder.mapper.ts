@@ -27,6 +27,7 @@ export class ReminderMapper {
       timeStamp: reminder.timeStamp.toISOString(),
       createdAt: reminder.createdAt.toISOString(),
       updatedAt: reminder.updatedAt.toISOString(),
+      isActive: reminder.isActive,
     });
   }
 

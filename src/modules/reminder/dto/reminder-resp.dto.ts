@@ -6,6 +6,7 @@ export class ReminderRespDto {
   public timeStamp: string;
   public createdAt: string;
   public updatedAt: string;
+  public isActive: boolean;
 
   private constructor(
     id: string,
@@ -14,7 +15,8 @@ export class ReminderRespDto {
     category: string,
     timeStamp: string,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    isActive: boolean
   ) {
     this.id = id;
     this.title = title;
@@ -23,6 +25,7 @@ export class ReminderRespDto {
     this.timeStamp = timeStamp;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
+    this.isActive = isActive;
   }
 
   public static create({
@@ -33,6 +36,7 @@ export class ReminderRespDto {
     timeStamp,
     createdAt,
     updatedAt,
+    isActive,
   }: {
     id: string;
     title: string;
@@ -41,6 +45,7 @@ export class ReminderRespDto {
     timeStamp: string;
     createdAt: string;
     updatedAt: string;
+    isActive: boolean;
   }): ReminderRespDto {
     return new ReminderRespDto(
       id,
@@ -49,7 +54,8 @@ export class ReminderRespDto {
       category,
       timeStamp,
       createdAt,
-      updatedAt
+      updatedAt,
+      isActive
     );
   }
 }

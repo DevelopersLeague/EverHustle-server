@@ -6,6 +6,7 @@ export interface IReminder extends mongoose.Document {
   content: string;
   category: string;
   isDeleted: boolean;
+  isActive: boolean;
   user: IUser;
   timeStamp: Date;
   createdAt: Date;
@@ -20,6 +21,10 @@ const reminderSchema = new mongoose.Schema(
     isDeleted: {
       type: Boolean,
       default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     timeStamp: Date,
