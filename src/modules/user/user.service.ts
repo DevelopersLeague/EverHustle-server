@@ -9,6 +9,7 @@ import { UserLoginDto } from './dto/user-login.dto';
 import jwt from 'jsonwebtoken';
 import { tokens } from '../../config/tokens.config';
 import { Model } from 'mongoose';
+import { logger } from '../../common';
 
 @injectable()
 @singleton()
@@ -75,8 +76,9 @@ export class UserService {
    */
   public async login(dto: UserLoginDto): Promise<string> {
     const user = await this.User.findOne({ email: dto.email });
+    // logger.debug(dto.email);
     if (!user) {
-      return Promise.reject(new createHttpError.Unauthorized('invalid email'));
+      return Promise.reject(new createHttpError.BadRequest('invalid email'));
     } else {
       // if user is found
       // email not verified

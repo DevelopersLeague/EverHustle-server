@@ -12,7 +12,12 @@ import { tokens } from '../../config/tokens.config';
 export class AuthController implements IBaseController {
   public path = '/api/v1/auth';
   public router = Router();
-  public middlewareBefore: Handler[] = [];
+  public middlewareBefore: Handler[] = [
+    (req, res, next) => {
+      console.debug(req.body);
+      next();
+    },
+  ];
   public middlewareAfter: Handler[] = [];
 
   constructor(
