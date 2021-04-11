@@ -19,9 +19,9 @@ export class App {
   }
 
   public initMiddleware(): void {
+    this.expressApp.use(cors());
     this.expressApp.use(express.urlencoded({ extended: false }));
     this.expressApp.use(express.json());
-    this.expressApp.use(cors());
     this.expressApp.use(helmet());
     this.expressApp.use(
       morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev')
