@@ -318,7 +318,7 @@ get list of goals by current user of specific category
 category:
     description: get goals of requested category
     url: /api/v1/goals/?category=shortterm
-    opttions: shortterm, longterm, daily etc
+    options: shortterm, longterm, daily etc
 
 @req-header
 Authorization: <token>
@@ -474,4 +474,161 @@ code: 400
 Reminders
 
 #################################################################################
+--------------------------------------------------------------------------------
+@route
+POST /api/v1/reminders
+
+@description
+set a new reminder
+
+@req-header
+Authorization: <token>
+
+@rq-body
+{
+    "title":"<title of the reminder>"
+    "content":"<contents of the reminder>"
+    "category":"<category of the reminder>"
+    "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+}
+
+@resp-body
+{
+    "reminder":{
+        "id":"<id of the reminder>"
+        "title":"<title of the reminder>"
+        "content":"<contents of the reminder>"
+        "category":"<category of the reminder>"
+        "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/reminders
+
+@description
+get all active reminders of a user
+
+@query
+category:
+    description: get reminders of requested category
+    url: /api/v1/reminders/?category=general
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "reminders":[
+        {
+            "id":"<id of the reminder>"
+            "title":"<title of the reminder>"
+            "content":"<contents of the reminder>"
+            "category":"<category of the reminder>"
+            "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+        },
+        {
+            "id":"<id of the reminder>"
+            "title":"<title of the reminder>"
+            "content":"<contents of the reminder>"
+            "category":"<category of the reminder>"
+            "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+        }
+    ]
+
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+GET /api/v1/reminders/{id}
+
+@description
+get one reminder
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "reminder":{
+        "id":"<id of the reminder>"
+        "title":"<title of the reminder>"
+        "content":"<contents of the reminder>"
+        "category":"<category of the reminder>"
+        "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+PUT /api/v1/reminders/{id}
+
+@description
+update one reminder
+
+@req-header
+Authorization: <token>
+
+@req-body
+{
+    "title":"<title of the reminder>"
+    "content":"<contents of the reminder>"
+    "category":"<category of the reminder>"
+    "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+}
+
+@resp-body
+{
+    "reminder":{
+        "id":"<id of the reminder>"
+        "title":"<title of the reminder>"
+        "content":"<contents of the reminder>"
+        "category":"<category of the reminder>"
+        "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
+--------------------------------------------------------------------------------
+@route
+DELETE /api/v1/reminders/{id}
+
+@description
+delete a reminder
+
+@req-header
+Authorization: <token>
+
+@resp-body
+{
+    "message":"reminder deleted"
+    "reminder":{
+        "id":"<id of the reminder>"
+        "title":"<title of the reminder>"
+        "content":"<contents of the reminder>"
+        "category":"<category of the reminder>"
+        "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+    }
+}
+
+@errors
+code: 401
+    message: unauthenticated
+
 --------------------------------------------------------------------------------

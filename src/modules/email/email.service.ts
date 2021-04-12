@@ -4,6 +4,8 @@ import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';
 import { tokens } from '../../config/tokens.config';
 import { MailService } from '@sendgrid/mail';
+import { IReminder } from '../reminder/reminder.model';
+import { IUser } from '../user';
 
 @injectable()
 @singleton()
@@ -45,5 +47,17 @@ export class EmailService {
         `<a href="${verficationLink}">verify email</a>`
       )
     );
+  }
+
+  public async sendReminderEmail(
+    user: IUser,
+    reminder: IReminder
+  ): Promise<void> {
+    await this.sendMail({
+      to: user.email,
+      from: 'everhustleapp@gmail.com',
+      subject: `reminder for ${reminder.title}`,
+      html: `<h1>${reminder.title}</h1><p>${reminder.content}</p>`,
+    });
   }
 }
