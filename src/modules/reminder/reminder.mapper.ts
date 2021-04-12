@@ -1,4 +1,5 @@
 import { injectable, singleton } from 'tsyringe';
+import { logger } from '../../common';
 import { IUser } from '../user';
 import { ReminderCreateDto } from './dto/reminder-create.dto';
 import { ReminderRespDto } from './dto/reminder-resp.dto';
@@ -9,13 +10,16 @@ import { IReminder } from './reminder.model';
 @singleton()
 export class ReminderMapper {
   public anyToCreateDto(body: any, user: IUser): ReminderCreateDto {
-    return ReminderCreateDto.create({
+    const dto = ReminderCreateDto.create({
       userId: user.id,
       title: body.title,
       content: body.content,
       category: body.category,
-      timeStamp: new Date(body.timeStamp),
+      timestamp: new Date(body.timestamp),
     });
+    // logger.debug(dto.timestamp);
+    // logger.debug(body.timestamp);
+    return dto;
   }
 
   public modelToRespDto(reminder: IReminder): ReminderRespDto {
@@ -24,7 +28,7 @@ export class ReminderMapper {
       title: reminder.title,
       content: reminder.content,
       category: reminder.category,
-      timeStamp: reminder.timeStamp.toISOString(),
+      timestamp: reminder.timestamp.toISOString(),
       createdAt: reminder.createdAt.toISOString(),
       updatedAt: reminder.updatedAt.toISOString(),
       isActive: reminder.isActive,
@@ -37,7 +41,7 @@ export class ReminderMapper {
       title: body.title,
       content: body.content,
       category: body.category,
-      timeStamp: new Date(body.timeStamp),
+      timestamp: body.timestamp ? new Date(body.timestamp) : undefined,
     });
   }
 }

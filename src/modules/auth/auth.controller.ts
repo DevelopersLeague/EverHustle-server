@@ -12,12 +12,7 @@ import { tokens } from '../../config/tokens.config';
 export class AuthController implements IBaseController {
   public path = '/api/v1/auth';
   public router = Router();
-  public middlewareBefore: Handler[] = [
-    (req, res, next) => {
-      console.debug(req.body);
-      next();
-    },
-  ];
+  public middlewareBefore: Handler[] = [];
   public middlewareAfter: Handler[] = [];
 
   constructor(
@@ -53,7 +48,7 @@ export class AuthController implements IBaseController {
       user: this.userMapper.modelToRespDto(user),
       message: 'signup successful confirm email and login to continue',
     });
-    logger.debug('response sent');
+    //logger.debug('response sent');
   }
 
   /**

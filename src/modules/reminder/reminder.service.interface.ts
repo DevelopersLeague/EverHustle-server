@@ -8,4 +8,14 @@ export interface IReminderService {
   updateReminder: (dto: ReminderUpdateDto) => Promise<IReminder>;
   deleteReminder: (id: string) => Promise<IReminder>;
   respondActiveReminders: () => Promise<void>;
+
+  getAllRemindersByDate: (
+    userId: string,
+    dateString: string
+  ) => Promise<IReminder[]>;
+
+  getAllRemindersByCategory: (
+    userId: string,
+    category: string
+  ) => Promise<IReminder[]>;
 }

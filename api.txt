@@ -489,7 +489,7 @@ Authorization: <token>
     "title":"<title of the reminder>"
     "content":"<contents of the reminder>"
     "category":"<category of the reminder>"
-    "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00)>"
+    "timestamp":"<timestamp in the iso format ie YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+05:30)>"
 }
 
 @resp-body

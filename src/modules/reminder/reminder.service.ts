@@ -1,4 +1,4 @@
-import { inject } from 'tsyringe';
+import { inject, injectable, singleton } from 'tsyringe';
 import { tokens } from '../../config/tokens.config';
 import { Model } from 'mongoose';
 import { IReminder } from './reminder.model';
@@ -6,10 +6,11 @@ import { IReminderService } from './reminder.service.interface';
 import { UserService } from '../user';
 import { ReminderCreateDto, ReminderUpdateDto } from './dto';
 import createHttpError from 'http-errors';
-import { create } from 'node:domain';
 import { EmailService } from '../email';
 import { logger } from '../../common';
 
+@injectable()
+@singleton()
 export class ReminderService implements IReminderService {
   constructor(
     @inject(tokens.REMINDER_MODEL) private readonly Reminder: Model<IReminder>,
@@ -24,11 +25,12 @@ export class ReminderService implements IReminderService {
   public async createReminder(dto: ReminderCreateDto): Promise<IReminder> {
     const reminder = new this.Reminder();
     const user = await this.userService.findUserByid(dto.userId);
+    //logger.debug(dto.timeStamp);
     await user.populate('reminders').execPopulate();
     reminder.title = dto.title;
     reminder.content = dto.content;
     reminder.category = dto.category;
-    reminder.timeStamp = dto.timeStamp;
+    reminder.timestamp = dto.timestamp;
     reminder.user = user;
     await reminder.save();
     user.reminders.push(reminder);
@@ -65,15 +67,53 @@ export class ReminderService implements IReminderService {
 
   /**
    * @description
+   * get all the reminders of a user of a certain date
+   */
+  public async getAllRemindersByDate(
+    userId: string,
+    dateString: string
+  ): Promise<IReminder[]> {
+    const user = await this.userService.findUserByid(userId);
+    const reminders = await this.Reminder.find({
+      user: user._id,
+      isDeleted: false,
+    });
+    return reminders.filter((reminder) => {
+      if (reminder.timestamp.toISOString().split('T')[0] === dateString)
+        return true;
+    });
+  }
+
+  /**
+   * @description
+   * get all the reminders of a user of a category
+   */
+  public async getAllRemindersByCategory(
+    userId: string,
+    category: string
+  ): Promise<IReminder[]> {
+    const user = await this.userService.findUserByid(userId);
+    const reminders = await this.Reminder.find({
+      user: user._id,
+      isDeleted: false,
+    });
+    return reminders.filter((reminder) => {
+      if (reminder.category === category) return true;
+    });
+  }
+
+  /**
+   * @description
    * update a reminder
    */
   public async updateReminder(dto: ReminderUpdateDto): Promise<IReminder> {
     const reminder = await this.Reminder.findById(dto.id);
+    logger.debug(dto.timestamp);
     if (reminder) {
       reminder.title = dto.title ? dto.title : reminder?.title;
       reminder.category = dto.category ? dto.category : reminder?.category;
       reminder.content = dto.content ? dto.content : reminder?.content;
-      reminder.timeStamp = dto.timeStamp ? dto.timeStamp : reminder?.timeStamp;
+      reminder.timestamp = dto.timestamp ? dto.timestamp : reminder?.timestamp;
       await reminder.save();
       return reminder;
     }
@@ -96,16 +136,26 @@ export class ReminderService implements IReminderService {
    * sends email to all the active reminders
    */
   public async respondActiveReminders(): Promise<void> {
+    logger.debug('inside cron function');
     const currentTime = new Date();
+    logger.debug('current time: %o', currentTime.toISOString());
     const allReminders = await this.Reminder.find().where({ isDeleted: false });
     const activeReminders = allReminders.filter((reminder) => {
-      return reminder.isActive == false && reminder.timeStamp <= currentTime;
+      if (reminder.isActive == true && reminder.timestamp <= currentTime) {
+        return true;
+      }
+      // if (reminder.isActive == true) return true;
     });
     logger.debug('active reminders: %o', activeReminders);
     for (const reminder of activeReminders) {
-      logger.debug('single reminder: %o', reminder);
       await reminder.populate('user').execPopulate();
-      await this.emailService.sendReminderEmail(reminder.user, reminder);
+      try {
+        await this.emailService.sendReminderEmail(reminder.user, reminder);
+      } catch (err) {
+        console.error(err);
+      }
+      reminder.isActive = false;
+      await reminder.save();
     }
   }
 }

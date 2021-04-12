@@ -30,6 +30,7 @@ export class AuthMiddleware {
           })
           .catch(next);
       } catch (err) {
+        console.debug(err);
         throw new createHttpError.Unauthorized('invalid token');
       }
     } else {

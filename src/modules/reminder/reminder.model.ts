@@ -8,7 +8,7 @@ export interface IReminder extends mongoose.Document {
   isDeleted: boolean;
   isActive: boolean;
   user: IUser;
-  timeStamp: Date;
+  timestamp: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,7 +27,7 @@ const reminderSchema = new mongoose.Schema(
       default: true,
     },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    timeStamp: Date,
+    timestamp: Date,
   },
   { timestamps: true }
 );

@@ -3,7 +3,7 @@ export class ReminderRespDto {
   public title: string;
   public content: string;
   public category: string;
-  public timeStamp: string;
+  public timestamp: string;
   public createdAt: string;
   public updatedAt: string;
   public isActive: boolean;
@@ -13,7 +13,7 @@ export class ReminderRespDto {
     title: string,
     content: string,
     category: string,
-    timeStamp: string,
+    timestamp: string,
     createdAt: string,
     updatedAt: string,
     isActive: boolean
@@ -22,7 +22,7 @@ export class ReminderRespDto {
     this.title = title;
     this.content = content;
     this.category = category;
-    this.timeStamp = timeStamp;
+    this.timestamp = timestamp;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.isActive = isActive;
@@ -33,7 +33,7 @@ export class ReminderRespDto {
     title,
     content,
     category,
-    timeStamp,
+    timestamp,
     createdAt,
     updatedAt,
     isActive,
@@ -42,7 +42,7 @@ export class ReminderRespDto {
     title: string;
     content: string;
     category: string;
-    timeStamp: string;
+    timestamp: string;
     createdAt: string;
     updatedAt: string;
     isActive: boolean;
@@ -52,7 +52,7 @@ export class ReminderRespDto {
       title,
       content,
       category,
-      timeStamp,
+      timestamp,
       createdAt,
       updatedAt,
       isActive
