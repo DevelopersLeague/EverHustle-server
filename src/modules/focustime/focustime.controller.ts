@@ -8,6 +8,7 @@ import { AuthMiddleware } from '../auth/auth.middleware';
 import { tokens } from '../../config/tokens.config';
 import { FocusTimeService } from './focustime.service';
 import { FocusTimeMapper } from './focustime.mapper';
+import { celebrate, Joi } from 'celebrate';
 
 @injectable()
 @singleton()
@@ -34,6 +35,14 @@ export class FocusTimeController implements IBaseController {
     );
     this.router.post(
       '/',
+      celebrate({
+        body: Joi.object({
+          date: Joi.string().isoDate(),
+          time: Joi.string().regex(
+            new RegExp('[0-9][0-9]:[0-9][0-9]:[0-9][0-9]')
+          ),
+        }),
+      }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.createFocusTime.bind(this))
     );

@@ -108,7 +108,7 @@ export class ReminderService implements IReminderService {
    */
   public async updateReminder(dto: ReminderUpdateDto): Promise<IReminder> {
     const reminder = await this.Reminder.findById(dto.id);
-    logger.debug(dto.timestamp);
+    // logger.debug(dto.timestamp);
     if (reminder) {
       reminder.title = dto.title ? dto.title : reminder?.title;
       reminder.category = dto.category ? dto.category : reminder?.category;
