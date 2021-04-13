@@ -37,9 +37,9 @@ export class ReminderUpdateDto {
   }
 
   public static validationSchema = Joi.object({
-    title: Joi.string().alphanum(),
-    content: Joi.string().alphanum(),
-    category: Joi.string().alphanum(),
+    title: Joi.string(),
+    content: Joi.string(),
+    category: Joi.string(),
     timestamp: Joi.string().isoDate(),
   });
 }

@@ -10,8 +10,8 @@ export class GoalCreateDto {
   ) {}
 
   public static validationSchema = Joi.object({
-    title: Joi.string().alphanum().required(),
-    content: Joi.string().alphanum().required(),
-    category: Joi.string().alphanum().required(),
+    title: Joi.string().required(),
+    content: Joi.string().required(),
+    category: Joi.string().required(),
   });
 }
