@@ -1,3 +1,4 @@
+import { Joi } from 'celebrate';
 export class ReminderUpdateDto {
   public id: string;
   public title?: string;
@@ -34,4 +35,11 @@ export class ReminderUpdateDto {
   }): ReminderUpdateDto {
     return new ReminderUpdateDto(id, title, content, category, timestamp);
   }
+
+  public static validationSchema = Joi.object({
+    title: Joi.string().alphanum(),
+    content: Joi.string().alphanum(),
+    category: Joi.string().alphanum(),
+    timestamp: Joi.string().isoDate(),
+  });
 }

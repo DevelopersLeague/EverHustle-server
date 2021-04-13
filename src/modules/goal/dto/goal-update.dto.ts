@@ -1,4 +1,5 @@
 import { IUser } from '../../user';
+import { Joi } from 'celebrate';
 
 export class GoalUpdateDto {
   constructor(
@@ -8,4 +9,11 @@ export class GoalUpdateDto {
     public category?: string,
     public isCompleted?: boolean
   ) {}
+
+  public static validationSchema = Joi.object({
+    title: Joi.string().alphanum(),
+    content: Joi.string().alphanum(),
+    category: Joi.string().alphanum(),
+    isCompleted: Joi.boolean(),
+  });
 }
