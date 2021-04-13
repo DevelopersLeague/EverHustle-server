@@ -6,6 +6,8 @@ import { NotesMapper } from './note.mapper';
 import { AuthMiddleware } from '../auth';
 import createHttpError, { Unauthorized } from 'http-errors';
 import { tokens } from '../../config/tokens.config';
+import * as dto from './dto';
+import { celebrate } from 'celebrate';
 
 @injectable()
 @singleton()
@@ -26,6 +28,7 @@ export class NotesController implements IBaseController {
   public initRoutes(): void {
     this.router.post(
       '/',
+      celebrate({ body: dto.NoteCreateDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.createOneNote.bind(this))
     );
@@ -46,6 +49,7 @@ export class NotesController implements IBaseController {
     );
     this.router.put(
       '/:id',
+      celebrate({ body: dto.NoteUpdateDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.updateOneNote.bind(this))
     );

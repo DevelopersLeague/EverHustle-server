@@ -10,6 +10,8 @@ import { Router, Request, Response } from 'express';
 import { ReminderCreateDto } from './dto';
 import { AuthMiddleware } from '../auth';
 import createHttpError from 'http-errors';
+import * as dto from './dto';
+import { celebrate } from 'celebrate';
 
 @injectable()
 @singleton()
@@ -32,6 +34,7 @@ export class ReminderController implements IBaseController {
   public initRoutes(): void {
     this.router.post(
       '/',
+      celebrate({ body: dto.ReminderCreateDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.createOneReminder.bind(this))
     );
@@ -48,6 +51,7 @@ export class ReminderController implements IBaseController {
     this.router.put(
       '/:id',
       this.authMiddleware.ensureAuth,
+      celebrate({ body: dto.ReminderUpdateDto.validationSchema }),
       catchAsync(this.updateOneReminder.bind(this))
     );
     this.router.delete(

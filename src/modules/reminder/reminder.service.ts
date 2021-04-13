@@ -136,9 +136,9 @@ export class ReminderService implements IReminderService {
    * sends email to all the active reminders
    */
   public async respondActiveReminders(): Promise<void> {
-    logger.debug('inside cron function');
+    // logger.debug('inside cron function');
     const currentTime = new Date();
-    logger.debug('current time: %o', currentTime.toISOString());
+    // logger.debug('current time: %o', currentTime.toISOString());
     const allReminders = await this.Reminder.find().where({ isDeleted: false });
     const activeReminders = allReminders.filter((reminder) => {
       if (reminder.isActive == true && reminder.timestamp <= currentTime) {
@@ -146,7 +146,7 @@ export class ReminderService implements IReminderService {
       }
       // if (reminder.isActive == true) return true;
     });
-    logger.debug('active reminders: %o', activeReminders);
+    // logger.debug('active reminders: %o', activeReminders);
     for (const reminder of activeReminders) {
       await reminder.populate('user').execPopulate();
       try {

@@ -6,6 +6,8 @@ import { GoalMapper } from './goal.mapper';
 import { GoalService } from './goal.service';
 import { catchAsync } from '../../common';
 import createHttpError from 'http-errors';
+import * as dto from './dto';
+import { celebrate } from 'celebrate';
 
 @injectable()
 @singleton()
@@ -34,11 +36,13 @@ export class GoalController implements IBaseController {
     );
     this.router.post(
       '/',
+      celebrate({ body: dto.GoalCreateDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.createOneGoal.bind(this))
     );
     this.router.put(
       '/:id',
+      celebrate({ body: dto.GoalUpdateDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.updateOneGoal.bind(this))
     );

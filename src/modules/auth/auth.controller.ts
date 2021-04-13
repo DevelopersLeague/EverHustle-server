@@ -6,6 +6,8 @@ import jwt from 'jsonwebtoken';
 import { env } from '../../config/env.config';
 import { AuthMiddleware } from './auth.middleware';
 import { tokens } from '../../config/tokens.config';
+import { CreateUserDto, UserLoginDto } from '../user/dto';
+import { celebrate } from 'celebrate';
 
 @injectable()
 @singleton()
@@ -24,10 +26,15 @@ export class AuthController implements IBaseController {
   }
 
   public initRoutes(): void {
-    this.router.post('/signup', catchAsync(this.signup.bind(this)));
+    this.router.post(
+      '/signup',
+      celebrate({ body: CreateUserDto.validationSchema }),
+      catchAsync(this.signup.bind(this))
+    );
     this.router.post('/login', catchAsync(this.login.bind(this)));
     this.router.get(
       '/test',
+      celebrate({ body: UserLoginDto.validationSchema }),
       this.authMiddleware.ensureAuth,
       catchAsync(this.test.bind(this))
     );

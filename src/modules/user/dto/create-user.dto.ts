@@ -11,7 +11,7 @@ export class CreateUserDto {
   public static validationSchema = Joi.object({
     firstName: Joi.string().alphanum().required(),
     lastName: Joi.string().alphanum().required(),
-    email: Joi.string().alphanum().required(),
+    email: Joi.string().email().required(),
     password: Joi.string().alphanum().required(),
   });
 }
