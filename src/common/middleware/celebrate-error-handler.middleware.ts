@@ -25,6 +25,7 @@ export function handleCelebrateError(): ErrorRequestHandler {
     const jsonResponse: any = {
       code: 400,
       errors: errors,
+      message: errors[0].message,
     };
     res.status(400).json(jsonResponse);
   };
