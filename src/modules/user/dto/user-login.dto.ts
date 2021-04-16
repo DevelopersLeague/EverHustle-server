@@ -5,6 +5,6 @@ export class UserLoginDto {
 
   public static validationSchema = Joi.object({
     email: Joi.string().email().required(),
-    password: Joi.string().alphanum().required(),
+    password: Joi.string().required(),
   });
 }

@@ -12,6 +12,6 @@ export class CreateUserDto {
     firstName: Joi.string().alphanum().required(),
     lastName: Joi.string().alphanum().required(),
     email: Joi.string().email().required(),
-    password: Joi.string().alphanum().required(),
+    password: Joi.string().required(),
   });
 }
