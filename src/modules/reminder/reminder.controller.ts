@@ -85,14 +85,20 @@ export class ReminderController implements IBaseController {
    */
   public async getAllReminders(req: Request, res: Response): Promise<any> {
     let reminders = await this.reminderService.getAllReminders(req.user!.id);
-    if (req.params.category) {
+    // filtering for category
+    if (req.query.category) {
+      console.log(req.query.category);
       reminders = reminders.filter((reminder) => {
-        if (reminder.category === req.params.category) return true;
+        if (reminder.category === req.query.category) {
+          console.log(JSON.stringify(reminder));
+          return true;
+        }
       });
     }
-    if (req.params.date) {
+    // filtering for date
+    if (req.query.date) {
       reminders = reminders.filter((reminder) => {
-        if (reminder.timestamp.toISOString().split('T')[0] === req.params.date)
+        if (reminder.timestamp.toISOString().split('T')[0] === req.query.date)
           return true;
       });
     }
