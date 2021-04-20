@@ -66,16 +66,16 @@ export class GoalService {
    */
   public async updateGoal(dto: GoalUpdateDto): Promise<IGoal> {
     const goal = await this.findGoalById(dto.id);
-    if (dto.title) {
+    if (dto.title !== undefined) {
       goal.title = dto.title;
     }
-    if (dto.content) {
+    if (dto.content !== undefined) {
       goal.content = dto.content;
     }
-    if (dto.category) {
+    if (dto.category !== undefined) {
       goal.category = dto.category;
     }
-    if (dto.isCompleted) {
+    if (dto.isCompleted !== undefined) {
       goal.isCompleted = dto.isCompleted;
     }
     await goal.save();
