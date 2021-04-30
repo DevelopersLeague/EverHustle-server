@@ -3,6 +3,8 @@ server for the EverHustle project
 
 
 [live demo](https://everhustle.netlify.app)\
+test user email: testuseraniket@gmail.com\
+test user password: password123
 
 
 ## how to run the server locally
