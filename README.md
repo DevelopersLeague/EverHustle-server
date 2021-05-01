@@ -1,8 +1,14 @@
 # EverHustle-server
-server for the EverHustle project
+server for the EverHustle project. EverHustle is an all in one productivity app for all of your productivity needs. 
+you can 
+- make notes 
+- set reminders
+- set and track timers
+- set and track goals
 
 
 [live demo](https://everhustle.netlify.app)\
+[front-end client](https://github.com/DevelopersLeague/EverHustle-FrontEnd)\
 test user email: testuseraniket@gmail.com\
 test user password: password123
 
