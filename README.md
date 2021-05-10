@@ -19,3 +19,4 @@ clone the repo and cd into it then run the following commands\
 `$ cp .env.example .env`\
 fill the missing environment variables in env file ie mongodb url and sendgrid api key\
 `$ npm start`
+
