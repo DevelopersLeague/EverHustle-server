@@ -5,7 +5,7 @@ you can
 - make notes 
 - set reminders
 - set and track timers
-- set and track goals
+- set and track goals.
 
 
 [live demo](https://everhustle.netlify.app)\
