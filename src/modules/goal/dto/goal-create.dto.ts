@@ -1,5 +1,5 @@
 import { IUser } from '../../user';
-import {Joi} from 'celebrate';
+import { Joi } from 'celebrate';
 
 export class GoalCreateDto {
   constructor(
