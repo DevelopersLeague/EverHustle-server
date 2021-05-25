@@ -24,7 +24,7 @@ const reminderService = container.resolve<IReminderService>(
   tokens.REMINDER_SERVICE
 );
 cron.schedule('* * * * *', () => {
-  reminderService.respondActiveReminders().catch(console.error);
+   reminderService.respondActiveReminders().catch(console.error);
 });
 mongoose
   .connect(env.MONGO_URI, {
