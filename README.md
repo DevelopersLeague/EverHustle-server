@@ -8,7 +8,7 @@ you can
 - set and track goals.
 
 
-[live demo](https://everhustle.netlify.app)\
+[live demo](https://everhustle.netlify.app)
 [front-end client repository](https://github.com/DevelopersLeague/EverHustle-FrontEnd)\
 test user email: testuseraniket@gmail.com\
 test user password: password123
